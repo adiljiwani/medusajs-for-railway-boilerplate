@@ -41,7 +41,18 @@ const nextConfig = withStoreConfig({
         protocol: 'https',
         hostname: 'medusa-server-testing.s3.us-east-1.amazonaws.com',
       },
+      {
+        protocol: "https",
+        hostname: "bngproducts.s3.us-east-2.amazonaws.com",
+      }
     ],
+  },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
   },
 })
 

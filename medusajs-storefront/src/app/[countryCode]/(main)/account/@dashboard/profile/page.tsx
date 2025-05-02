@@ -11,7 +11,7 @@ import { notFound } from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Profile",
-  description: "View and edit your Medusa Store profile.",
+  description: "View and edit your Batteries N' Things account profile.",
 }
 
 export default async function Profile() {
@@ -23,7 +23,7 @@ export default async function Profile() {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full" data-testid="profile-page-wrapper">
       <div className="mb-8 flex flex-col gap-y-4">
         <h1 className="text-2xl-semi">Profile</h1>
         <p className="text-base-regular">

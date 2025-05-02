@@ -23,6 +23,8 @@ import { ProductCategoryWithChildren, ProductPreviewType } from "types/global"
 import { medusaClient } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { cookies } from "next/headers"
+import path from "path"
+import fs from "fs/promises"
 
 const emptyResponse = {
   response: { products: [], count: 0 },
@@ -759,4 +761,43 @@ export const getProductsByCategoryHandle = cache(async function ({
     response,
     nextPage,
   }
+})
+
+// TODO: until APIs are implemented, `listUnlockedPhones()`, `listBrands()`,
+// `listDevices()`, and `listCategories()` will read data from `dropdowns.json` file.
+const dropdownsFilePath = path.resolve(
+  process.cwd(),
+  "src/lib/data/dropdowns.json"
+)
+
+async function readDropdownsFile() {
+  const data = await fs.readFile(dropdownsFilePath, "utf-8")
+  return JSON.parse(data)
+}
+
+export const listUnlockedPhones = async () => {
+  const dropdowns = await readDropdownsFile()
+  return dropdowns["Unlocked Phones"] || []
+}
+
+export const listBrands = async () => {
+  const dropdowns = await readDropdownsFile()
+  return dropdowns["Shop by Brand"] || []
+}
+
+export const listDevices = async () => {
+  const dropdowns = await readDropdownsFile()
+  return dropdowns["Shop by Device"] || []
+}
+
+export const listCartShippingMethods = cache(async function (cartId: string) {
+  const headers = getMedusaHeaders(["shipping"])
+
+  return medusaClient.shippingOptions
+    .listCartOptions(cartId, headers)
+    .then(({ shipping_options }) => shipping_options)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
 })

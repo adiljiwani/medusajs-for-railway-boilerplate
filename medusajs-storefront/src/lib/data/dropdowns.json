@@ -1,0 +1,1180 @@
+{
+  "Unlocked Phones": [
+    {
+      "name": "Apple",
+      "children": [
+        { 
+          "name": "iPhone 16", 
+          "children": [
+            {
+              "name": "iPhone 16 Pro",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 16 Pro Max",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 16",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 16 Plus",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            }
+          ],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        { 
+          "name": "iPhone 15", 
+          "children": [
+            {
+              "name": "iPhone 15 Pro",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 15 Pro Max",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 15",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 15 Plus",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            }
+          ],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        { 
+          "name": "iPhone 14", 
+          "children": [
+            {
+              "name": "iPhone 14 Pro",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 14 Pro Max",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 14",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 14 Plus",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            }
+          ],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        { 
+          "name": "iPhone 13", 
+          "children": [
+            {
+              "name": "iPhone 13 Pro",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 13 Pro Max",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 13",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 13 Plus",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            }
+          ],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        { 
+          "name": "iPhone 12", 
+          "children": [
+            {
+              "name": "iPhone 12 Pro",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 12 Pro Max",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 12",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            },
+            {
+              "name": "iPhone 12 Plus",
+              "children": [],
+              "include": {
+                "category_id": ["9"],
+                "subcategory_id": ["27", "59"]
+              },
+              "exclude": {
+                "category_id": [],
+                "subcategory_id": []
+              },
+              "searchByTitle": true
+            }
+          ],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        }
+      ],
+      "include": {
+        "category_id": ["9"],
+        "subcategory_id": ["27", "59"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    {
+      "name": "Samsung",
+      "children": [
+        { 
+          "name": "Galaxy S23 Ultra", 
+          "children": [], 
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Galaxy Z Flip 3", 
+          "children": [], 
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        }
+      ],
+      "include": {
+        "category_id": ["9"],
+        "subcategory_id": ["27", "59"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    {
+      "name": "Motorola",
+      "children": [
+        { 
+          "name": "Motorola M1", 
+          "children": [], 
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Motorola M2", 
+          "children": [], 
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        }
+      ],
+      "include": {
+        "category_id": ["9"],
+        "subcategory_id": ["27", "59"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    }
+  ],
+  "Shop by Category": [
+    { 
+      "name": "Batteries", 
+      "children": [],
+      "include": {
+        "category_id": ["1"],
+        "subcategory_id": ["1", "2", "3"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Cables and Adapters", 
+      "children": [],
+      "include": {
+        "category_id": ["2"],
+        "subcategory_id": ["4", "5", "6", "7"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Phones and Communications", 
+      "children": [
+        {
+          "name": "Cell Phone Batteries",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "SIM Cards",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["14"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Unlocked Phones",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["27", "59"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Tablets",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["55"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Phone Display",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["56"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Charging Port",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["57"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        }
+      ],
+      "include": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Protection", 
+      "children": [
+        {
+          "name": "Screen Protectors",
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["53"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Phone Cases",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["43"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        }
+      ],
+      "include": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Audio", 
+      "children": [
+        {
+          "name": "Headphones",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["41"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Speakers",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["42"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        }
+      ],
+      "include": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Power", 
+      "children": [
+        {
+          "name": "Wall Chargers",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["46"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Car Chargers",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["47"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Battery Packs (DONT HAVE A CATEGORY FOR THIS!)",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["3", "2"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Wireless Chargers (DONT HAVE A CATEGORY FOR THIS!)",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["47"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Docks and Charging Stations (DONT HAVE A CATEGORY FOR THIS!)",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["47"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        }
+      ],
+      "include": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Accessories", 
+      "children": [
+        {
+          "name": "Cables",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["48"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Memory",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["13", "14", "15"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Watches",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["37"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Phone Grips and Wallets (DONT HAVE A CATEGORY FOR THIS!)",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["30"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Computer",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["38"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        }
+      ],
+      "include": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Watches and Clocks", 
+      "children": [
+        {
+          "name": "Watches",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["37"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        },
+        {
+          "name": "Clocks",
+          "children": [],
+          "include": {
+            "category_id": [],
+            "subcategory_id": ["36"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": false
+        }
+      ],
+      "include": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    }
+  ],
+  "Shop by Brand": [
+    { 
+      "name": "Fido", 
+      "children": [],
+      "include": {
+        "category_id": ["10"],
+        "subcategory_id": ["28", "29"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Chatr", 
+      "children": [],
+      "include": {
+        "category_id": ["11"],
+        "subcategory_id": ["30", "31"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Apple", 
+      "children": [],
+      "include": {
+        "category_id": ["9", "12"],
+        "subcategory_id": ["27", "32"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Samsung", 
+      "children": [],
+      "include": {
+        "category_id": ["9", "13"],
+        "subcategory_id": ["27", "33"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    },
+    { 
+      "name": "Kingston", 
+      "children": [],
+      "include": {
+        "category_id": ["14"],
+        "subcategory_id": ["34"]
+      },
+      "exclude": {
+        "category_id": [],
+        "subcategory_id": []
+      },
+      "searchByTitle": false
+    }
+  ],
+  "Shop by Device": [
+    {
+      "name": "Apple",
+      "children": [
+        { 
+          "name": "iPhone 15 Pro", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "iPhone 15 Pro Max", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "iPhone 15", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "iPhone 15 Plus", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        }
+      ]
+    },
+    {
+      "name": "Samsung",
+      "children": [
+        { 
+          "name": "Galaxy S23 Ultra", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Galaxy Z Flip 3", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Galaxy S22 Ultra", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Galaxy S21 Ultra", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        }
+      ]
+    },
+    {
+      "name": "Motorola",
+      "children": [
+        { 
+          "name": "M1", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "M2", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "M3", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "M4", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        }
+      ]
+    },
+    {
+      "name": "Alcatel",
+      "children": [
+        { 
+          "name": "A1", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "A2", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "A3", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "A4", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        }
+      ]
+    },
+    {
+      "name": "ZTE",
+      "children": [
+        { 
+          "name": "Z1", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Z2", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Z3", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        },
+        { 
+          "name": "Z4", 
+          "children": [],
+          "include": {
+            "category_id": ["9"],
+            "subcategory_id": ["28", "30", "46", "47", "48", "50", "52", "53", "54", "55", "56", "57", "43", "44"]
+          },
+          "exclude": {
+            "category_id": [],
+            "subcategory_id": []
+          },
+          "searchByTitle": true
+        }
+      ]
+    }
+  ]
+}

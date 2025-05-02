@@ -1,6 +1,7 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ChevronDown from "@modules/common/icons/chevron-down"
 import MedusaCTA from "@modules/layout/components/medusa-cta"
+import { Text } from "@medusajs/ui"
 
 export default function CheckoutLayout({
   children,
@@ -14,6 +15,7 @@ export default function CheckoutLayout({
           <LocalizedClientLink
             href="/cart"
             className="text-small-semi text-ui-fg-base flex items-center gap-x-2 uppercase flex-1 basis-0"
+            data-testid="back-to-cart-link"
           >
             <ChevronDown className="rotate-90" size={16} />
             <span className="mt-px hidden small:block txt-compact-plus text-ui-fg-subtle hover:text-ui-fg-base ">
@@ -26,15 +28,21 @@ export default function CheckoutLayout({
           <LocalizedClientLink
             href="/"
             className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+            data-testid="store-link"
           >
-            Medusa Store
+            Batteries N&apos; Things
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>
       </div>
-      <div className="relative">{children}</div>
-      <div className="py-4 w-full flex items-center justify-center">
-        <MedusaCTA />
+      <div className="relative" data-testid="checkout-container">
+        {children}
+      </div>
+      <div className="py-4 w-full flex items-center justify-center text-ui-fg-muted">
+        <Text className="txt-compact-small">
+          © {new Date().getFullYear()} Batteries N&apos; Things. All rights
+          reserved.
+        </Text>
       </div>
     </div>
   )

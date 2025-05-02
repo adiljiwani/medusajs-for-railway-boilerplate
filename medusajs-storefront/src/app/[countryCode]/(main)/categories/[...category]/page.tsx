@@ -14,73 +14,85 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  const product_categories = await listCategories()
+  try {
+    const [{ product_categories }, regions] = await Promise.all([
+      listCategories().catch(() => []),
+      listRegions().catch(() => [])
+    ])
 
-  if (!product_categories) {
+    // Safely extract country codes, filtering out any undefined values
+    const countryCodes = (regions || [])
+      .flatMap((r: { countries: { iso_2: string }[] }) => r.countries.map(c => c.iso_2))
+      .filter(Boolean); // Remove any undefined/null values
+    
+    // If we don't have any valid country codes, return empty array
+    if (!countryCodes.length) {
+      return []
+    }
+
+    // Safely extract category handles, filtering out any undefined values
+    const categoryHandles = product_categories
+      .map((category: { handle: string }) => category?.handle)
+      .filter(Boolean); // Remove any undefined/null values
+
+    // If we don't have any valid category handles, return empty array
+    if (!categoryHandles.length) {
+      return []
+    }
+
+    // Build paths with explicit string conversion to avoid any undefined issues
+    return countryCodes.map(countryCode => 
+      categoryHandles.map((handle: string) => ({
+        countryCode: String(countryCode),
+        category: [String(handle)]
+      }))
+    ).flat()
+  } catch (error) {
+    // During build time, if API is not available, return empty array
+    // Pages will be generated on-demand at runtime
     return []
   }
-
-  const countryCodes = await listRegions().then((regions) =>
-    regions?.map((r) => r.countries.map((c) => c.iso_2)).flat()
-  )
-
-  const categoryHandles = product_categories.map((category) => category.handle)
-
-  const staticParams = countryCodes
-    ?.map((countryCode) =>
-      categoryHandles.map((handle) => ({
-        countryCode,
-        category: [handle],
-      }))
-    )
-    .flat()
-
-  return staticParams
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  try {
-    const { product_categories } = await getCategoryByHandle(
-      params.category
-    ).then((product_categories) => product_categories)
+  const { category } = params
 
-    const title = product_categories
-      .map((category) => category.name)
-      .join(" | ")
+  const categoryName = category[category.length - 1]
 
-    const description =
-      product_categories[product_categories.length - 1].description ??
-      `${title} category.`
-
-    return {
-      title: `${title} | Medusa Store`,
-      description,
-      alternates: {
-        canonical: `${params.category.join("/")}`,
-      },
-    }
-  } catch (error) {
-    notFound()
+  return {
+    title: `${categoryName} | Batteries N' Things`,
+    description: `${categoryName} category`,
   }
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
+  const { category: categoryHandles, countryCode } = params
   const { sortBy, page } = searchParams
 
-  const { product_categories } = await getCategoryByHandle(
-    params.category
-  ).then((product_categories) => product_categories)
+  // Get all categories
+  const categories = []
+  
+  // Handle each category param and build the categories array
+  for (const handle of categoryHandles) {
+    const category = await getCategoryByHandle(handle)
+    
+    if (!category) {
+      notFound()
+    }
+    
+    categories.push(category)
+  }
 
-  if (!product_categories) {
+  if (!categories.length) {
     notFound()
   }
 
   return (
     <CategoryTemplate
-      categories={product_categories}
+      categories={categories}
       sortBy={sortBy}
       page={page}
-      countryCode={params.countryCode}
+      countryCode={countryCode}
     />
   )
 }
