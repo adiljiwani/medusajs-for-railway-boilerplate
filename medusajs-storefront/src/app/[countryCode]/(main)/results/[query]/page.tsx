@@ -149,8 +149,8 @@ export default async function SearchResults({ params, searchParams }: Params) {
   } = await getProductsListWithSort({
     page: 1,
     queryParams: { 
-      id: searchResults.hits.map(hit => hit.id), // Get ALL products from search results
-      limit: searchResults.hits.length
+      id: searchResults.map((hit: any) => hit.id), // Get ALL products from search results
+      limit: searchResults.length
     },
     sortBy, // Apply the sort to all products
     countryCode: params.countryCode,
