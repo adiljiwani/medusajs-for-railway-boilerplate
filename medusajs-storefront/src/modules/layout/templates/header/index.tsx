@@ -1,4 +1,5 @@
 import { Suspense } from "react"
+import Image from "next/image"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import { MagnifyingGlassIcon, UserIcon } from "@heroicons/react/24/solid"
