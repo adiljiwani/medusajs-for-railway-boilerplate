@@ -1,6 +1,6 @@
 "use client"
 
-import { Region } from "@medusajs/medusa"
+import { Customer, Region } from "@medusajs/medusa"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 import { Button } from "@medusajs/ui"
 import { isEqual } from "lodash"
@@ -8,16 +8,20 @@ import { useParams } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { useIntersection } from "@lib/hooks/use-in-view"
-import { addToCart } from "@modules/cart/actions"
 import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/option-select"
+import QuantityInput from "@modules/products/components/quantity-input"
 
 import MobileActions from "../mobile-actions"
 import ProductPrice from "../product-price"
+import { handleAddToCart } from "@modules/cart/utils"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 type ProductActionsProps = {
   product: PricedProduct
   region: Region
+  disabled?: boolean
+  customer: Omit<Customer, "password_hash"> | null
 }
 
 export type PriceType = {
@@ -27,12 +31,19 @@ export type PriceType = {
   percentage_diff?: string
 }
 
+export type ProductQuantityInfo = {
+  available_quantity: number
+}
+
 export default function ProductActions({
   product,
   region,
+  disabled,
+  customer,
 }: ProductActionsProps) {
   const [options, setOptions] = useState<Record<string, string>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [quantity, setQuantity] = useState(1) // State for quantity input
 
   const countryCode = useParams().countryCode as string
 
@@ -95,13 +106,23 @@ export default function ProductActions({
 
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
-    if (variant && !variant.inventory_quantity) {
-      return false
-    }
-
-    if (variant && variant.allow_backorder === false) {
+    // If we don't manage inventory, we can always add to cart
+    if (variant && !variant.manage_inventory) {
       return true
     }
+
+    // If we allow back orders on the variant, we can add to cart
+    if (variant && variant.allow_backorder) {
+      return true
+    }
+
+    // If there is inventory available, we can add to cart
+    if (variant?.inventory_quantity && variant.inventory_quantity > 0) {
+      return true
+    }
+
+    // Otherwise, we can't add to cart
+    return true
   }, [variant])
 
   const actionsRef = useRef<HTMLDivElement>(null)
@@ -109,19 +130,19 @@ export default function ProductActions({
   const inView = useIntersection(actionsRef, "0px")
 
   // add the selected variant to the cart
-  const handleAddToCart = async () => {
+  const handleAddToCartClick = async () => {
     if (!variant?.id) return null
-
-    setIsAdding(true)
-
-    await addToCart({
+    await handleAddToCart({
       variantId: variant.id,
-      quantity: 1,
+      quantity, // Pass the user-specified quantity
       countryCode,
+      setIsAdding,
     })
-
-    setIsAdding(false)
   }
+
+  // Get customer details and their approval status
+  const isCustomerSignedIn = !!customer
+  const isCustomerApproved = !!customer?.metadata?.approved
 
   return (
     <>
@@ -129,38 +150,74 @@ export default function ProductActions({
         <div>
           {product.variants.length > 1 && (
             <div className="flex flex-col gap-y-4">
-              {(product.options || []).map((option) => {
-                return (
-                  <div key={option.id}>
-                    <OptionSelect
-                      option={option}
-                      current={options[option.id]}
-                      updateOption={updateOptions}
-                      title={option.title}
-                    />
-                  </div>
-                )
-              })}
+              {(product.options || []).map((option) => (
+                <div key={option.id}>
+                  <OptionSelect
+                    option={option}
+                    current={options[option.id]}
+                    updateOption={updateOptions}
+                    title={option.title}
+                    data-testid="product-options"
+                    disabled={!!disabled || isAdding}
+                  />
+                </div>
+              ))}
               <Divider />
             </div>
           )}
         </div>
 
-        <ProductPrice product={product} variant={variant} region={region} />
+        {isCustomerSignedIn ? (
+          isCustomerApproved ? (
+            <>
+              <ProductPrice
+                product={product}
+                variant={variant}
+                region={region}
+              />
 
-        <Button
-          onClick={handleAddToCart}
-          disabled={!inStock || !variant}
-          variant="primary"
-          className="w-full h-10"
-          isLoading={isAdding}
-        >
-          {!variant
-            ? "Select variant"
-            : !inStock
-            ? "Out of stock"
-            : "Add to cart"}
-        </Button>
+              <QuantityInput
+                initialQuantity={quantity}
+                onUpdate={(newQuantity) => setQuantity(newQuantity)}
+              />
+
+              <Button
+                onClick={handleAddToCartClick}
+                disabled={!inStock || !variant || !!disabled || isAdding}
+                variant="primary"
+                className="w-full h-10"
+                isLoading={isAdding}
+                data-testid="add-product-button"
+              >
+                {!variant
+                  ? "Select variant"
+                  : !inStock
+                  ? "Out of stock"
+                  : "Add to cart"}
+              </Button>
+            </>
+          ) : (
+            <LocalizedClientLink href="/contact">
+              <Button
+                variant="danger"
+                size="base"
+                className="w-full h-10 whitespace-nowrap"
+              >
+                Contact Us for Approval
+              </Button>
+            </LocalizedClientLink>
+          )
+        ) : (
+          <LocalizedClientLink href="/account">
+            <Button
+              variant="danger"
+              size="base"
+              className="w-full h-10 whitespace-nowrap"
+            >
+              Sign In to See Price
+            </Button>
+          </LocalizedClientLink>
+        )}
         <MobileActions
           product={product}
           variant={variant}
@@ -168,9 +225,10 @@ export default function ProductActions({
           options={options}
           updateOptions={updateOptions}
           inStock={inStock}
-          handleAddToCart={handleAddToCart}
+          handleAddToCart={handleAddToCartClick}
           isAdding={isAdding}
           show={!inView}
+          optionsDisabled={!!disabled || isAdding}
         />
       </div>
     </>

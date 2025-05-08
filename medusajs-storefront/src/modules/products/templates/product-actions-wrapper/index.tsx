@@ -1,5 +1,5 @@
 import { retrievePricedProductById } from "@lib/data"
-import { Region } from "@medusajs/medusa"
+import { Customer, Region } from "@medusajs/medusa"
 import ProductActions from "@modules/products/components/product-actions"
 
 /**
@@ -8,9 +8,11 @@ import ProductActions from "@modules/products/components/product-actions"
 export default async function ProductActionsWrapper({
   id,
   region,
+  customer,
 }: {
   id: string
   region: Region
+  customer: Omit<Customer, "password_hash"> | null
 }) {
   const product = await retrievePricedProductById({ id, regionId: region.id })
 
@@ -18,5 +20,7 @@ export default async function ProductActionsWrapper({
     return null
   }
 
-  return <ProductActions product={product} region={region} />
+  return (
+    <ProductActions product={product} region={region} customer={customer} />
+  )
 }
