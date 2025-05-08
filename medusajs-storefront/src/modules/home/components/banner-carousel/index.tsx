@@ -44,7 +44,7 @@ export default function BannerCarousel({ banners }: BannerCarouselProps) {
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [handleNext])
 
   return (
     <div className="relative w-full overflow-hidden">

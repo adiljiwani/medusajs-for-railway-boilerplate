@@ -30,11 +30,13 @@ export default function Header({
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="h-full">
               <LocalizedClientLink href="/" className="h-full">
-                <img
+                <Image
                   src="/logo.png"
                   style={{ cursor: "pointer" }}
                   alt="Batteries N' Things Logo"
                   className="h-full object-contain"
+                  width={150}
+                  height={64}
                 />
               </LocalizedClientLink>
             </div>
