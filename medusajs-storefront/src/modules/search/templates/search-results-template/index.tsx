@@ -5,6 +5,8 @@ import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import PaginatedProducts from "@modules/store/templates/paginated-products"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import InteractiveLink from "@modules/common/components/interactive-link"
+import { Customer } from "@medusajs/medusa"
 
 type SearchResultsTemplateProps = {
   query: string
@@ -12,6 +14,11 @@ type SearchResultsTemplateProps = {
   sortBy?: SortOptions
   page?: string
   countryCode: string
+  customer: Omit<Customer, "password_hash"> | null
+  totalHits: number
+  totalPages: number
+  category_id?: string
+  subcategory_id?: string
 }
 
 const SearchResultsTemplate = ({
@@ -20,6 +27,11 @@ const SearchResultsTemplate = ({
   sortBy,
   page,
   countryCode,
+  customer,
+  totalHits,
+  totalPages,
+  category_id,
+  subcategory_id,
 }: SearchResultsTemplateProps) => {
   const pageNumber = page ? parseInt(page) : 1
 
@@ -29,16 +41,22 @@ const SearchResultsTemplate = ({
         <div className="flex flex-col items-start">
           <Text className="text-ui-fg-muted">Search Results for:</Text>
           <Heading>
-            {decodeURI(query)} ({ids.length})
+            {decodeURI(query)} ({totalHits})
           </Heading>
+          {(category_id || subcategory_id) && (
+            <Text className="text-ui-fg-muted text-sm">
+              Filtered by: {category_id && "Category"} {category_id && subcategory_id && "and"} {subcategory_id && "Subcategory"}
+            </Text>
+          )}
         </div>
-        <LocalizedClientLink
-          href="/store"
-          className="txt-medium text-ui-fg-subtle hover:text-ui-fg-base"
-        >
-          Clear
-        </LocalizedClientLink>
+        <div className="flex items-center gap-x-4">
+          <InteractiveLink clear={true} href="/store">
+            Clear Search
+          </InteractiveLink>
+          <InteractiveLink href="/">Home</InteractiveLink>
+        </div>
       </div>
+
       <div className="flex flex-col small:flex-row small:items-start p-6">
         {ids.length > 0 ? (
           <>
@@ -49,6 +67,8 @@ const SearchResultsTemplate = ({
                 sortBy={sortBy}
                 page={pageNumber}
                 countryCode={countryCode}
+                customer={customer}
+                totalPages={totalPages}
               />
             </div>
           </>

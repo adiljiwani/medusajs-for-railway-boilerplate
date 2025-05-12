@@ -44,7 +44,7 @@ export default function BannerCarousel({ banners }: BannerCarouselProps) {
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [handleNext])
+  }, [])
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -81,6 +81,7 @@ export default function BannerCarousel({ banners }: BannerCarouselProps) {
             <Image
               src={banner.imageUrl}
               alt={banner.altText || "Banner"}
+              layout="responsive"
               width={1920}
               height={600}
               priority={index === currentIndex} // Load the current banner first

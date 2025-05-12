@@ -21,11 +21,13 @@ const Hits = ({
 }: HitsProps<ProductHit>) => {
   const { query } = useSearchBox()
   const { hits } = useHits(props)
+  const width = typeof window !== "undefined" ? window.innerWidth : 0
+  const previewLimit = width > 640 ? 25 : 10
 
   return (
     <div
       className={clx(
-        "transition-[height,max-height,opacity] duration-300 ease-in-out sm:overflow-hidden w-full sm:w-[50vw] mb-1 p-px",
+        "transition-[height,max-height,opacity] duration-300 ease-in-out sm:overflow-hidden w-full sm:w-[75vw] mb-1 p-px",
         className,
         {
           "max-h-full opacity-100": !!query,
@@ -33,19 +35,25 @@ const Hits = ({
         }
       )}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-        {hits.slice(0, 6).map((hit, index) => (
-          <li
-            key={index}
-            className={clx("list-none", {
-              "hidden sm:block": index > 2,
-            })}
-          >
-            <Hit hit={hit as unknown as ProductHit} />
-          </li>
-        ))}
+      <div 
+        className="max-h-[80vh] overflow-y-auto"
+        style={{ scrollbarWidth: 'thin' }}
+      >
+        <div
+          className="grid grid-cols-1 sm:grid-cols-3 medium:grid-cols-5 gap-4 mb-4"
+          data-testid="search-results"
+        >
+          {hits.slice(0, previewLimit).map((hit, index) => (
+            <li
+              key={index}
+              className="list-none"
+            >
+              <Hit hit={hit as unknown as ProductHit} />
+            </li>
+          ))}
+        </div>
+        <ShowAll />
       </div>
-      <ShowAll />
     </div>
   )
 }
