@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 
 interface BannerCarouselProps {
@@ -26,7 +26,7 @@ export default function BannerCarousel({ banners }: BannerCarouselProps) {
     }, 500)
   }
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (isSliding) return
     setIsSliding(true)
     setTimeout(() => {
@@ -35,7 +35,7 @@ export default function BannerCarousel({ banners }: BannerCarouselProps) {
       )
       setIsSliding(false)
     }, 500)
-  }
+  }, [isSliding, banners.length])
 
   // Auto-slide every 5 seconds
   useEffect(() => {

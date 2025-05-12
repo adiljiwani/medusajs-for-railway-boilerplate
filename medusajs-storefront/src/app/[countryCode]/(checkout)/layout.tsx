@@ -30,7 +30,7 @@ export default function CheckoutLayout({
             className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
             data-testid="store-link"
           >
-            Batteries N' Things
+            Batteries N&#39; Things
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>
@@ -40,7 +40,7 @@ export default function CheckoutLayout({
       </div>
       <div className="py-4 w-full flex items-center justify-center text-ui-fg-muted">
         <Text className="txt-compact-small">
-          © {new Date().getFullYear()} Batteries N' Things. All rights
+          © {new Date().getFullYear()} Batteries N&#39; Things. All rights
           reserved.
         </Text>
       </div>

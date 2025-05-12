@@ -669,34 +669,97 @@ export const getProductsByCollectionHandle = cache(
 )
 
 // Category actions
-export const listCategories = async () => {
-  const dropdowns = await readDropdownsFile()
-  return dropdowns["Shop by Category"] || []
-}
+export const listCategories = cache(async function () {
+  const headers = {
+    next: {
+      tags: ["collections"],
+    },
+  } as Record<string, any>
+
+  return medusaClient.productCategories
+    .list({ expand: "category_children" }, headers)
+    .then(({ product_categories }) => product_categories)
+    .catch((err) => {
+      throw err
+    })
+})
+
+export const getCategoriesList = cache(async function (
+  offset: number = 0,
+  limit: number = 100
+): Promise<{
+  product_categories: ProductCategoryWithChildren[]
+  count: number
+}> {
+  const { product_categories, count } = await medusaClient.productCategories
+    .list({ limit, offset }, { next: { tags: ["categories"] } })
+    .catch((err) => {
+      throw err
+    })
+
+  return {
+    product_categories,
+    count,
+  }
+})
+
+export const getCategoryByHandle = cache(async function getCategoryByHandle(handle: string) {
+  const headers = getMedusaHeaders(["categories"])
+
+  const category = await medusaClient.productCategories
+    .retrieve(handle, headers)
+    .then(({ product_category }) => product_category)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
+
+  if (!category) {
+    return null
+  }
+
+  return {
+    id: category.id,
+  }
+})
+
+export const getProductsByCategoryHandle = cache(async function ({
+  pageParam = 0,
+  handle,
+  countryCode,
+}: {
+  pageParam?: number
+  handle: string
+  countryCode: string
+  currencyCode?: string
+}): Promise<{
+  response: { products: ProductPreviewType[]; count: number }
+  nextPage: number | null
+}> {
+  const category = await getCategoryByHandle(handle)
+  if (!category) {
+    return {
+      response: { products: [], count: 0 },
+      nextPage: null,
+    }
+  }
+  const { id } = category
+
+  const { response, nextPage } = await getProductsList({
+    pageParam,
+    queryParams: { category_id: [id] },
+    countryCode,
+  })
+    .then((res) => res)
+    .catch((err) => {
+      throw err
+    })
+
+  return {
+    response,
+    nextPage,
+  }
+})
 
 // TODO: until APIs are implemented, `listUnlockedPhones()`, `listBrands()`,
-// `listDevices()`, and `listCategories()` will read data from `dropdowns.json` file.
-const dropdownsFilePath = path.resolve(
-  process.cwd(),
-  "src/lib/data/dropdowns.json"
-)
-
-async function readDropdownsFile() {
-  const data = await fs.readFile(dropdownsFilePath, "utf-8")
-  return JSON.parse(data)
-}
-
-export const listUnlockedPhones = async () => {
-  const dropdowns = await readDropdownsFile()
-  return dropdowns["Unlocked Phones"] || []
-}
-
-export const listBrands = async () => {
-  const dropdowns = await readDropdownsFile()
-  return dropdowns["Shop by Brand"] || []
-}
-
-export const listDevices = async () => {
-  const dropdowns = await readDropdownsFile()
-  return dropdowns["Shop by Device"] || []
-}
+// `listDevices()`, and `
