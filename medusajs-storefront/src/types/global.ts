@@ -56,3 +56,19 @@ export type ProductCategoryWithChildren = Omit<
   category_children: ProductCategory[]
   category_parent?: ProductCategory
 }
+
+// For Header Dropdowns
+export interface FilterConfig {
+  category_id?: string[]
+  subcategory_id?: string[]
+}
+
+export interface DropdownOption {
+  name: string
+  children: DropdownOption[] | string[]
+  category_id?: string
+  subcategory_id?: string
+  include?: FilterConfig
+  exclude?: FilterConfig
+  searchByTitle?: boolean
+}

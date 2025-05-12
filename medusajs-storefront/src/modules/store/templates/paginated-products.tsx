@@ -2,8 +2,9 @@ import { getProductsListWithSort, getRegion } from "@lib/data"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { Customer } from "@medusajs/medusa"
 
-const PRODUCT_LIMIT = 12
+const PRODUCT_LIMIT = 50
 
 type PaginatedProductsParams = {
   limit: number
@@ -19,6 +20,8 @@ export default async function PaginatedProducts({
   categoryId,
   productsIds,
   countryCode,
+  customer,
+  totalPages: providedTotalPages,
 }: {
   sortBy?: SortOptions
   page: number
@@ -26,6 +29,8 @@ export default async function PaginatedProducts({
   categoryId?: string
   productsIds?: string[]
   countryCode: string
+  customer: Omit<Customer, "password_hash"> | null
+  totalPages?: number
 }) {
   const region = await getRegion(countryCode)
 
@@ -58,20 +63,33 @@ export default async function PaginatedProducts({
     countryCode,
   })
 
-  const totalPages = Math.ceil(count / PRODUCT_LIMIT)
+  const finalTotalPages = providedTotalPages || Math.ceil(count / PRODUCT_LIMIT)
 
   return (
     <>
-      <ul className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
+      <ul
+        className="grid w-full grid-cols-2 gap-4 small:grid-cols-3 medium:grid-cols-5"
+        data-testid="products-list"
+      >
         {products.map((p) => {
           return (
-            <li key={p.id}>
-              <ProductPreview productPreview={p} region={region} />
+            <li key={p.id} className="flex flex-col">
+              <ProductPreview
+                productPreview={p}
+                region={region}
+                customer={customer}
+              />
             </li>
           )
         })}
       </ul>
-      {totalPages > 1 && <Pagination page={page} totalPages={totalPages} />}
+      {finalTotalPages > 1 && (
+        <Pagination
+          data-testid="product-pagination"
+          page={page}
+          totalPages={finalTotalPages}
+        />
+      )}
     </>
   )
 }

@@ -1,5 +1,3 @@
-"use server"
-
 import {
   ProductCategory,
   ProductCollection,
@@ -23,6 +21,7 @@ import { ProductCategoryWithChildren, ProductPreviewType } from "types/global"
 import { medusaClient } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { cookies } from "next/headers"
+
 import path from "path"
 import fs from "fs/promises"
 
@@ -48,6 +47,8 @@ const getMedusaHeaders = (tags: string[] = []) => {
 
   if (token) {
     headers.authorization = `Bearer ${token}`
+  } else {
+    headers.authorization = ""
   }
 
   return headers
@@ -201,22 +202,11 @@ export const retrieveOrder = cache(async function (id: string) {
 })
 
 // Shipping actions
-export const listShippingMethods = cache(async function listShippingMethods(
-  regionId: string,
-  productIds?: string[]
-) {
+export const listCartShippingMethods = cache(async function (cartId: string) {
   const headers = getMedusaHeaders(["shipping"])
 
-  const product_ids = productIds?.join(",")
-
   return medusaClient.shippingOptions
-    .list(
-      {
-        region_id: regionId,
-        product_ids,
-      },
-      headers
-    )
+    .listCartOptions(cartId, headers)
     .then(({ shipping_options }) => shipping_options)
     .catch((err) => {
       console.log(err)
@@ -248,7 +238,13 @@ export async function getToken(credentials: StorePostAuthReq) {
       },
     })
     .then(({ access_token }) => {
-      access_token && cookies().set("_medusa_jwt", access_token)
+      access_token &&
+        cookies().set("_medusa_jwt", access_token, {
+          maxAge: 60 * 60 * 24 * 7,
+          httpOnly: true,
+          sameSite: "strict",
+          secure: process.env.NODE_ENV === "production",
+        })
       return access_token
     })
     .catch((err) => {
@@ -388,7 +384,7 @@ export const getRegion = cache(async function (countryCode: string) {
 
     const region = countryCode
       ? regionMap.get(countryCode)
-      : regionMap.get("us")
+      : regionMap.get("ca")
 
     return region
   } catch (e: any) {
@@ -489,7 +485,7 @@ export const getProductsList = cache(async function ({
     return transformProductPreview(product, region!)
   })
 
-  const nextPage = count > pageParam + 1 ? pageParam + 1 : null
+  const nextPage = pageParam + limit < count ? pageParam + limit : null
 
   return {
     response: { products: transformedProducts, count },
@@ -514,31 +510,44 @@ export const getProductsListWithSort = cache(
     nextPage: number | null
     queryParams?: StoreGetProductsParams
   }> {
-    const limit = queryParams?.limit || 12
+    const PRODUCTS_PER_PAGE = 50
+    const limit = queryParams?.limit || PRODUCTS_PER_PAGE
+    
+    // If we're filtering by IDs, don't use offset pagination
+    const offset = queryParams?.id ? 0 : (page - 1) * limit
+    
+    console.log(`[Debug] Fetching products with:`)
+    console.log(`- Page: ${page}`)
+    console.log(`- Offset: ${offset}`)
+    console.log(`- Limit: ${limit}`)
+    console.log(`- Query params:`, queryParams)
+    console.log(`- Filtering by IDs: ${Boolean(queryParams?.id)}`)
 
     const {
       response: { products, count },
     } = await getProductsList({
-      pageParam: 0,
+      pageParam: offset,
       queryParams: {
         ...queryParams,
-        limit: 100,
+        limit: queryParams?.id ? queryParams.id.length : limit, // If filtering by IDs, get all those products
       },
       countryCode,
     })
 
+    console.log(`[Debug] Products fetched from API:`, products.length)
+    console.log(`[Debug] Total count:`, count)
+    
     const sortedProducts = sortProducts(products, sortBy)
+    console.log(`[Debug] Products after sorting:`, sortedProducts.length)
 
-    const pageParam = (page - 1) * limit
-
-    const nextPage = count > pageParam + limit ? pageParam + limit : null
-
-    const paginatedProducts = sortedProducts.slice(pageParam, pageParam + limit)
+    // Only calculate next page if we're not filtering by IDs
+    const nextPage = queryParams?.id ? null : (offset + limit < count ? page + 1 : null)
+    console.log(`[Debug] Next page:`, nextPage)
 
     return {
       response: {
-        products: paginatedProducts,
-        count,
+        products: sortedProducts,
+        count: queryParams?.id ? products.length : count, // If filtering by IDs, use actual product count
       },
       nextPage,
       queryParams,
@@ -660,108 +669,10 @@ export const getProductsByCollectionHandle = cache(
 )
 
 // Category actions
-export const listCategories = cache(async function () {
-  const headers = {
-    next: {
-      tags: ["collections"],
-    },
-  } as Record<string, any>
-
-  return medusaClient.productCategories
-    .list({ expand: "category_children" }, headers)
-    .then(({ product_categories }) => product_categories)
-    .catch((err) => {
-      throw err
-    })
-})
-
-export const getCategoriesList = cache(async function (
-  offset: number = 0,
-  limit: number = 100
-): Promise<{
-  product_categories: ProductCategoryWithChildren[]
-  count: number
-}> {
-  const { product_categories, count } = await medusaClient.productCategories
-    .list({ limit, offset }, { next: { tags: ["categories"] } })
-    .catch((err) => {
-      throw err
-    })
-
-  return {
-    product_categories,
-    count,
-  }
-})
-
-export const getCategoryByHandle = cache(async function (
-  categoryHandle: string[]
-): Promise<{
-  product_categories: ProductCategoryWithChildren[]
-}> {
-  const handles = categoryHandle.map((handle: string, index: number) =>
-    categoryHandle.slice(0, index + 1).join("/")
-  )
-
-  const product_categories = [] as ProductCategoryWithChildren[]
-
-  for (const handle of handles) {
-    const category = await medusaClient.productCategories
-      .list(
-        {
-          handle: handle,
-        },
-        {
-          next: {
-            tags: ["categories"],
-          },
-        }
-      )
-      .then(({ product_categories: { [0]: category } }) => category)
-      .catch((err) => {
-        return {} as ProductCategory
-      })
-
-    product_categories.push(category)
-  }
-
-  return {
-    product_categories,
-  }
-})
-
-export const getProductsByCategoryHandle = cache(async function ({
-  pageParam = 0,
-  handle,
-  countryCode,
-}: {
-  pageParam?: number
-  handle: string
-  countryCode: string
-  currencyCode?: string
-}): Promise<{
-  response: { products: ProductPreviewType[]; count: number }
-  nextPage: number | null
-}> {
-  const { id } = await getCategoryByHandle([handle]).then(
-    (res) => res.product_categories[0]
-  )
-
-  const { response, nextPage } = await getProductsList({
-    pageParam,
-    queryParams: { category_id: [id] },
-    countryCode,
-  })
-    .then((res) => res)
-    .catch((err) => {
-      throw err
-    })
-
-  return {
-    response,
-    nextPage,
-  }
-})
+export const listCategories = async () => {
+  const dropdowns = await readDropdownsFile()
+  return dropdowns["Shop by Category"] || []
+}
 
 // TODO: until APIs are implemented, `listUnlockedPhones()`, `listBrands()`,
 // `listDevices()`, and `listCategories()` will read data from `dropdowns.json` file.
@@ -789,15 +700,3 @@ export const listDevices = async () => {
   const dropdowns = await readDropdownsFile()
   return dropdowns["Shop by Device"] || []
 }
-
-export const listCartShippingMethods = cache(async function (cartId: string) {
-  const headers = getMedusaHeaders(["shipping"])
-
-  return medusaClient.shippingOptions
-    .listCartOptions(cartId, headers)
-    .then(({ shipping_options }) => shipping_options)
-    .catch((err) => {
-      console.log(err)
-      return null
-    })
-})

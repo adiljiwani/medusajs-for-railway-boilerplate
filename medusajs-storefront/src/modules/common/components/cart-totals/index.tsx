@@ -4,13 +4,42 @@ import { formatAmount } from "@lib/util/prices"
 import { InformationCircleSolid } from "@medusajs/icons"
 import { Cart, Order } from "@medusajs/medusa"
 import { Tooltip } from "@medusajs/ui"
-import React from "react"
+import React, { useEffect, useState } from "react"
+
+const MEDUSA_BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000'
 
 type CartTotalsProps = {
   data: Omit<Cart, "refundable_amount" | "refunded_total"> | Order
 }
 
-const CartTotals: React.FC<CartTotalsProps> = ({ data }) => {
+const CartTotals: React.FC<CartTotalsProps> = ({ data: initialData }) => {
+  const [data, setData] = useState(initialData)
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const fetchUpdatedCart = async () => {
+      if ('id' in initialData) {
+        setIsLoading(true)
+        try {
+          const response = await fetch(`${MEDUSA_BACKEND_URL}/store/carts/${initialData.id}/taxes`, {
+            method: 'POST',
+            credentials: 'include',
+          })
+          const { cart } = await response.json()
+          setData(cart)
+        } catch (error) {
+          console.error("Error fetching updated cart:", error)
+          setData(initialData)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    fetchUpdatedCart()
+  }, [initialData])
+
+  // Use data with fallback to initialData
   const {
     subtotal,
     discount_total,
@@ -18,12 +47,15 @@ const CartTotals: React.FC<CartTotalsProps> = ({ data }) => {
     tax_total,
     shipping_total,
     total,
-  } = data
+  } = data || initialData
 
   const getAmount = (amount: number | null | undefined) => {
+    // Use data with fallback to initialData to ensure we always have a region
+    const displayData = data || initialData
+
     return formatAmount({
       amount: amount || 0,
-      region: data.region,
+      region: displayData.region,
       includeTaxes: false,
     })
   }
@@ -38,37 +70,57 @@ const CartTotals: React.FC<CartTotalsProps> = ({ data }) => {
               <InformationCircleSolid color="var(--fg-muted)" />
             </Tooltip>
           </span>
-          <span>{getAmount(subtotal)}</span>
+          <span data-testid="cart-subtotal" data-value={subtotal || 0}>
+            {getAmount(subtotal)}
+          </span>
         </div>
         {!!discount_total && (
           <div className="flex items-center justify-between">
             <span>Discount</span>
-            <span className="text-ui-fg-interactive">
+            <span
+              className="text-ui-fg-interactive"
+              data-testid="cart-discount"
+              data-value={discount_total || 0}
+            >
               - {getAmount(discount_total)}
-            </span>
-          </div>
-        )}
-        {!!gift_card_total && (
-          <div className="flex items-center justify-between">
-            <span>Gift card</span>
-            <span className="text-ui-fg-interactive">
-              - {getAmount(gift_card_total)}
             </span>
           </div>
         )}
         <div className="flex items-center justify-between">
           <span>Shipping</span>
-          <span>{getAmount(shipping_total)}</span>
+          <span data-testid="cart-shipping" data-value={shipping_total || 0}>
+            {getAmount(shipping_total)}
+          </span>
         </div>
         <div className="flex justify-between">
           <span className="flex gap-x-1 items-center ">Taxes</span>
-          <span>{getAmount(tax_total)}</span>
+          <span data-testid="cart-taxes" data-value={tax_total || 0}>
+            {getAmount(tax_total)}
+          </span>
         </div>
+        {!!gift_card_total && (
+          <div className="flex items-center justify-between">
+            <span>Gift card</span>
+            <span
+              className="text-ui-fg-interactive"
+              data-testid="cart-gift-card-amount"
+              data-value={gift_card_total || 0}
+            >
+              - {getAmount(gift_card_total)}
+            </span>
+          </div>
+        )}
       </div>
       <div className="h-px w-full border-b border-gray-200 my-4" />
       <div className="flex items-center justify-between text-ui-fg-base mb-2 txt-medium ">
         <span>Total</span>
-        <span className="txt-xlarge-plus">{getAmount(total)}</span>
+        <span
+          className="txt-xlarge-plus"
+          data-testid="cart-total"
+          data-value={total || 0}
+        >
+          {getAmount(total)}
+        </span>
       </div>
       <div className="h-px w-full border-b border-gray-200 mt-4" />
     </div>

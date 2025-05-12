@@ -10,7 +10,6 @@ import {
   retrievePricedProductById,
 } from "@lib/data"
 import { Region } from "@medusajs/medusa"
-import { ProductPreviewType } from "types/global"
 import ProductTemplate from "@modules/products/templates"
 
 type Props = {
@@ -18,39 +17,32 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  try {
-    const [regionsResult, products] = await Promise.all([
-      listRegions().catch(() => []),
-      getProductsList({ countryCode: "us" }).catch(() => ({ response: { products: [] } }))
-    ])
+  const countryCodes = await listRegions().then((regions) =>
+    regions?.map((r) => r.countries.map((c) => c.iso_2)).flat()
+  )
 
-    if (!regionsResult?.length) {
-      return []
-    }
-
-    const countryCodes = regionsResult
-      .map((r: Region) => r.countries.map((c: { iso_2: string }) => c.iso_2))
-      .flat()
-    
-    if (!countryCodes.length || !products.response.products.length) {
-      return []
-    }
-
-    return countryCodes.map((countryCode: string) =>
-      products.response.products
-        .filter((product: ProductPreviewType): product is ProductPreviewType & { handle: string } => 
-          product.handle !== null
-        )
-        .map((product) => ({
-          countryCode,
-          handle: product.handle,
-        }))
-    ).flat()
-  } catch (error) {
-    // During build time, if API is not available, return empty array
-    // Pages will be generated on-demand at runtime
-    return []
+  if (!countryCodes) {
+    return null
   }
+
+  const products = await Promise.all(
+    countryCodes.map((countryCode) => {
+      return getProductsList({ countryCode })
+    })
+  ).then((responses) =>
+    responses.map(({ response }) => response.products).flat()
+  )
+
+  const staticParams = countryCodes
+    ?.map((countryCode) =>
+      products.map((product) => ({
+        countryCode,
+        handle: product.handle,
+      }))
+    )
+    .flat()
+
+  return staticParams
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

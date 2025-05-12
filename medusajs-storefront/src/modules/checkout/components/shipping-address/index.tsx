@@ -5,6 +5,17 @@ import Input from "@modules/common/components/input"
 import AddressSelect from "../address-select"
 import CountrySelect from "../country-select"
 import { Container } from "@medusajs/ui"
+import { retrieveCart } from "@modules/cart/actions"
+import NativeSelect from "@modules/common/components/native-select"
+import { cartUpdate } from "@modules/checkout/actions"
+
+const MEDUSA_BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000'
+
+type ProvinceOption = {
+  name: string
+  code: string
+  rate: number
+}
 
 const ShippingAddress = ({
   customer,
@@ -47,6 +58,29 @@ const ShippingAddress = ({
     [customer?.shipping_addresses, countriesInRegion]
   )
 
+  const [provinceOptions, setProvinceOptions] = useState<ProvinceOption[]>([])
+
+  useEffect(() => {
+    const fetchProvinceOptions = async () => {
+      if (cart?.region?.id) {
+        try {
+          const response = await fetch(
+            `${MEDUSA_BACKEND_URL}/store/tax-rates?region_id=${cart.region.id}`,
+            {
+              credentials: 'include'
+            }
+          )
+          const data = await response.json()
+          setProvinceOptions(data)
+        } catch (error) {
+          console.error("Error fetching province options:", error)
+        }
+      }
+    }
+
+    fetchProvinceOptions()
+  }, [cart?.region?.id])
+
   useEffect(() => {
     setFormData({
       "shipping_address.first_name": cart?.shipping_address?.first_name || "",
@@ -63,15 +97,36 @@ const ShippingAddress = ({
     })
   }, [cart?.shipping_address, cart?.email])
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLInputElement | HTMLSelectElement
-    >
+  const handleChange = async (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setFormData({
+    const newFormData = {
       ...formData,
       [e.target.name]: e.target.value,
-    })
+    }
+    setFormData(newFormData)
+
+    // Update cart with new shipping address
+    const cartData = {
+      shipping_address: {
+        first_name: newFormData["shipping_address.first_name"],
+        last_name: newFormData["shipping_address.last_name"],
+        address_1: newFormData["shipping_address.address_1"],
+        company: newFormData["shipping_address.company"],
+        postal_code: newFormData["shipping_address.postal_code"],
+        city: newFormData["shipping_address.city"],
+        country_code: newFormData["shipping_address.country_code"],
+        province: newFormData["shipping_address.province"],
+        phone: newFormData["shipping_address.phone"],
+      },
+      email: newFormData.email,
+    }
+
+    try {
+      await cartUpdate(cartData)
+    } catch (error) {
+      console.error("Error updating cart:", error)
+    }
   }
 
   return (
@@ -92,6 +147,7 @@ const ShippingAddress = ({
           value={formData["shipping_address.first_name"]}
           onChange={handleChange}
           required
+          data-testid="shipping-first-name-input"
         />
         <Input
           label="Last name"
@@ -100,6 +156,7 @@ const ShippingAddress = ({
           value={formData["shipping_address.last_name"]}
           onChange={handleChange}
           required
+          data-testid="shipping-last-name-input"
         />
         <Input
           label="Address"
@@ -108,6 +165,7 @@ const ShippingAddress = ({
           value={formData["shipping_address.address_1"]}
           onChange={handleChange}
           required
+          data-testid="shipping-address-input"
         />
         <Input
           label="Company"
@@ -115,6 +173,7 @@ const ShippingAddress = ({
           value={formData["shipping_address.company"]}
           onChange={handleChange}
           autoComplete="organization"
+          data-testid="shipping-company-input"
         />
         <Input
           label="Postal code"
@@ -123,6 +182,7 @@ const ShippingAddress = ({
           value={formData["shipping_address.postal_code"]}
           onChange={handleChange}
           required
+          data-testid="shipping-postal-code-input"
         />
         <Input
           label="City"
@@ -131,6 +191,7 @@ const ShippingAddress = ({
           value={formData["shipping_address.city"]}
           onChange={handleChange}
           required
+          data-testid="shipping-city-input"
         />
         <CountrySelect
           name="shipping_address.country_code"
@@ -139,21 +200,32 @@ const ShippingAddress = ({
           value={formData["shipping_address.country_code"]}
           onChange={handleChange}
           required
+          data-testid="shipping-country-select"
         />
-        <Input
-          label="State / Province"
+        <NativeSelect
+          placeholder="State / Province"
           name="shipping_address.province"
           autoComplete="address-level1"
           value={formData["shipping_address.province"]}
           onChange={handleChange}
-        />
+          required
+          data-testid="shipping-province-input"
+        >
+          <option value="">Select a province</option>
+          {provinceOptions.map((option) => (
+            <option key={option.code} value={option.code}>
+              {option.name}
+            </option>
+          ))}
+        </NativeSelect>
       </div>
       <div className="my-8">
         <Checkbox
-          label="Same as billing address"
+          label="Billing address same as shipping address"
           name="same_as_billing"
           checked={checked}
           onChange={onChange}
+          data-testid="billing-address-checkbox"
         />
       </div>
       <div className="grid grid-cols-2 gap-4 mb-4">
@@ -166,6 +238,7 @@ const ShippingAddress = ({
           value={formData.email}
           onChange={handleChange}
           required
+          data-testid="shipping-email-input"
         />
         <Input
           label="Phone"
@@ -173,6 +246,7 @@ const ShippingAddress = ({
           autoComplete="tel"
           value={formData["shipping_address.phone"]}
           onChange={handleChange}
+          data-testid="shipping-phone-input"
         />
       </div>
     </>

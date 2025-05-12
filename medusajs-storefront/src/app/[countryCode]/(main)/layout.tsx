@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { getCustomer, listCategories, listUnlockedPhones, listBrands, listDevices } from "@lib/data"
+import { getCustomer } from "@lib/data"
 import Footer from "@modules/layout/templates/footer"
 // import Nav from "@modules/layout/templates/nav"
 import Header from "@modules/layout/templates/header"
@@ -11,24 +11,12 @@ export const metadata: Metadata = {
 }
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
-  const [customer, categories, unlockedPhones, brands, devices] = await Promise.all([
-    getCustomer().catch(() => null),
-    listCategories(),
-    listUnlockedPhones(),
-    listBrands(),
-    listDevices(),
-  ])
+  const customer = await getCustomer().catch(() => null)
 
   return (
     <>
       {/* <Nav /> */}
-      <Header 
-        customer={customer}
-        categories={categories}
-        unlockedPhones={unlockedPhones}
-        brands={brands}
-        devices={devices}
-      />
+      <Header customer={customer} />
       {props.children}
       <Footer />
     </>

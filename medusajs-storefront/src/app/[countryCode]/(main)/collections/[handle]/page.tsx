@@ -5,7 +5,6 @@ import {
   getCollectionByHandle,
   getCollectionsList,
   listRegions,
-  getCustomer,
 } from "@lib/data"
 import CollectionTemplate from "@modules/collections/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
@@ -21,30 +20,28 @@ type Props = {
 export const PRODUCT_LIMIT = 12
 
 export async function generateStaticParams() {
-  try {
-    const [{ collections }, regions] = await Promise.all([
-      getCollectionsList().catch(() => ({ collections: [] })),
-      listRegions().catch(() => [])
-    ])
+  const { collections } = await getCollectionsList()
 
-    if (!collections?.length || !regions?.length) {
-      return []
-    }
+  if (!collections) {
+    return []
+  }
 
-    const countryCodes = regions.map((r) => r.countries.map((c) => c.iso_2)).flat()
-    const collectionHandles = collections.map((collection) => collection.handle)
+  const countryCodes = await listRegions().then((regions) =>
+    regions?.map((r) => r.countries.map((c) => c.iso_2)).flat()
+  )
 
-    return countryCodes.map((countryCode) =>
+  const collectionHandles = collections.map((collection) => collection.handle)
+
+  const staticParams = countryCodes
+    ?.map((countryCode) =>
       collectionHandles.map((handle) => ({
         countryCode,
         handle,
       }))
-    ).flat()
-  } catch (error) {
-    // During build time, if API is not available, return empty array
-    // Pages will be generated on-demand at runtime
-    return []
-  }
+    )
+    .flat()
+
+  return staticParams
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -65,10 +62,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CollectionPage({ params, searchParams }: Props) {
   const { sortBy, page } = searchParams
 
-  const [collection, customer] = await Promise.all([
-    getCollectionByHandle(params.handle).then((collection) => collection),
-    getCustomer().catch(() => null),
-  ])
+  const collection = await getCollectionByHandle(params.handle).then(
+    (collection) => collection
+  )
 
   if (!collection) {
     notFound()
@@ -80,7 +76,6 @@ export default async function CollectionPage({ params, searchParams }: Props) {
       page={page}
       sortBy={sortBy}
       countryCode={params.countryCode}
-      customer={customer}
     />
   )
 }
