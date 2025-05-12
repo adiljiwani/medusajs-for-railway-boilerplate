@@ -22,13 +22,12 @@ export default function ProductPreviewCartActions({
   const [quantity, setQuantity] = useState(1)
   const [isAdding, setIsAdding] = useState(false)
   const params = useParams()
+  const countryCode = params.countryCode as string
 
   if (!variantId || !handle) {
     return null
   }
   
-  const countryCode = params.countryCode as string
-
   // Get customer details and their approval status
   const isCustomerSignedIn = !!customer
   const isCustomerApproved = !!customer?.metadata?.approved

@@ -694,39 +694,23 @@ export const getCategoriesList = cache(async function (
   }
 })
 
-export const getCategoryByHandle = cache(async function (
-  categoryHandle: string[]
-): Promise<{
-  product_categories: ProductCategoryWithChildren[]
-}> {
-  const handles = categoryHandle.map((handle: string, index: number) =>
-    categoryHandle.slice(0, index + 1).join("/")
-  )
+export const getCategoryByHandle = cache(async function getCategoryByHandle(handle: string) {
+  const headers = getMedusaHeaders(["categories"])
 
-  const product_categories = [] as ProductCategoryWithChildren[]
+  const category = await medusaClient.productCategories
+    .retrieve(handle, headers)
+    .then(({ product_category }) => product_category)
+    .catch((err) => {
+      console.log(err)
+      return null
+    })
 
-  for (const handle of handles) {
-    const category = await medusaClient.productCategories
-      .list(
-        {
-          handle: handle,
-        },
-        {
-          next: {
-            tags: ["categories"],
-          },
-        }
-      )
-      .then(({ product_categories: { [0]: category } }) => category)
-      .catch((err) => {
-        return {} as ProductCategory
-      })
-
-    product_categories.push(category)
+  if (!category) {
+    return null
   }
 
   return {
-    product_categories,
+    id: category.id,
   }
 })
 
@@ -743,9 +727,14 @@ export const getProductsByCategoryHandle = cache(async function ({
   response: { products: ProductPreviewType[]; count: number }
   nextPage: number | null
 }> {
-  const { id } = await getCategoryByHandle([handle]).then(
-    (res) => res.product_categories[0]
-  )
+  const category = await getCategoryByHandle(handle)
+  if (!category) {
+    return {
+      response: { products: [], count: 0 },
+      nextPage: null,
+    }
+  }
+  const { id } = category
 
   const { response, nextPage } = await getProductsList({
     pageParam,
@@ -764,40 +753,4 @@ export const getProductsByCategoryHandle = cache(async function ({
 })
 
 // TODO: until APIs are implemented, `listUnlockedPhones()`, `listBrands()`,
-// `listDevices()`, and `listCategories()` will read data from `dropdowns.json` file.
-const dropdownsFilePath = path.resolve(
-  process.cwd(),
-  "src/lib/data/dropdowns.json"
-)
-
-async function readDropdownsFile() {
-  const data = await fs.readFile(dropdownsFilePath, "utf-8")
-  return JSON.parse(data)
-}
-
-export const listUnlockedPhones = async () => {
-  const dropdowns = await readDropdownsFile()
-  return dropdowns["Unlocked Phones"] || []
-}
-
-export const listBrands = async () => {
-  const dropdowns = await readDropdownsFile()
-  return dropdowns["Shop by Brand"] || []
-}
-
-export const listDevices = async () => {
-  const dropdowns = await readDropdownsFile()
-  return dropdowns["Shop by Device"] || []
-}
-
-export const listCartShippingMethods = cache(async function (cartId: string) {
-  const headers = getMedusaHeaders(["shipping"])
-
-  return medusaClient.shippingOptions
-    .listCartOptions(cartId, headers)
-    .then(({ shipping_options }) => shipping_options)
-    .catch((err) => {
-      console.log(err)
-      return null
-    })
-})
+// `listDevices()`, and `
