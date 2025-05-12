@@ -46,6 +46,9 @@ const Review = ({
                 By clicking the Place Order button, you confirm that you have
                 read, understand and accept our Terms of Use, Terms of Sale and
                 Returns Policy and acknowledge that you have read Batteries N&#39; Things&#39; Privacy Policy.
+                <br />
+                Note, you will recieve an invoice for items available to fulfill with the payment amount. Your goods will only be shipped after payment is received.
+                <br />
               </Text>
             </div>
           </div>
