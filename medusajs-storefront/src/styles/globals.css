@@ -110,3 +110,11 @@
     @apply text-[32px] leading-[44px] font-semibold;
   }
 }
+
+.nav-link {
+  @apply text-gray-700 font-medium tracking-wide transition duration-200 ease-in-out;
+}
+
+.nav-link:hover {
+  @apply text-[#005daa] font-bold;
+}

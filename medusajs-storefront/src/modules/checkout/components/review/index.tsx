@@ -15,10 +15,13 @@ const Review = ({
 
   const isOpen = searchParams.get("step") === "review"
 
+  const paidByGiftcard =
+    cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
+
   const previousStepsCompleted =
     cart.shipping_address &&
     cart.shipping_methods.length > 0 &&
-    cart.payment_session
+    (cart.payment_session || paidByGiftcard)
 
   return (
     <div className="bg-white">
@@ -42,12 +45,14 @@ const Review = ({
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
                 By clicking the Place Order button, you confirm that you have
                 read, understand and accept our Terms of Use, Terms of Sale and
-                Returns Policy and acknowledge that you have read Medusa
-                Store&apos;s Privacy Policy.
+                Returns Policy and acknowledge that you have read Batteries N' Things' Privacy Policy.
+                <br />
+                Note, you will recieve an invoice for items available to fulfill with the payment amount. Your goods will only be shipped after payment is received.
+                <br />
               </Text>
             </div>
           </div>
-          <PaymentButton cart={cart} />
+          <PaymentButton cart={cart} data-testid="submit-order-button" />
         </>
       )}
     </div>

@@ -19,15 +19,14 @@ export default function ProductPreviewCartActions({
   handle: string | null
   customer: Omit<Customer, "password_hash"> | null
 }) {
-  const [quantity, setQuantity] = useState(1)
-  const [isAdding, setIsAdding] = useState(false)
-  const params = useParams()
-
   if (!variantId || !handle) {
     return null
   }
-  
-  const countryCode = params.countryCode as string
+
+  const [quantity, setQuantity] = useState(1)
+  const [isAdding, setIsAdding] = useState(false)
+
+  const countryCode = useParams().countryCode as string
 
   // Get customer details and their approval status
   const isCustomerSignedIn = !!customer

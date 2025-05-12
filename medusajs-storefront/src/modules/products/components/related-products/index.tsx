@@ -1,18 +1,20 @@
-import { StoreGetProductsParams } from "@medusajs/medusa"
+import { Customer, StoreGetProductsParams } from "@medusajs/medusa"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 
 import { getProductsList, getRegion } from "@lib/data"
 
-import ProductPreview from "../product-preview"
+import ProductRail from "@modules/home/components/featured-products/product-rail"
 
 type RelatedProductsProps = {
   product: PricedProduct
   countryCode: string
+  customer: Omit<Customer, "password_hash"> | null
 }
 
 export default async function RelatedProducts({
   product,
   countryCode,
+  customer
 }: RelatedProductsProps) {
   const region = await getRegion(countryCode)
 
@@ -63,21 +65,17 @@ export default async function RelatedProducts({
   return (
     <div className="product-page-constraint">
       <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
-        </span>
         <p className="text-2xl-regular text-ui-fg-base max-w-lg">
           You might also want to check out these products.
         </p>
       </div>
 
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
-        {productPreviews.map((productPreview) => (
-          <li key={productPreview.id}>
-            <ProductPreview region={region} productPreview={productPreview} />
-          </li>
-        ))}
-      </ul>
+      <ProductRail
+        products={productPreviews}
+        region={region}
+        title="Related Products"
+        customer={customer}
+      />
     </div>
   )
 }

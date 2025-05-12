@@ -1,7 +1,7 @@
 import { Text, clx } from "@medusajs/ui"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import React from "react"
-// @ts-nocheck
+
 type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
   title: string
   subtitle?: string
@@ -53,7 +53,8 @@ const Item: React.FC<AccordionItemProps> = ({
         "py-3",
         className
       )}
-    >{/* @ts-expect-error */}
+    >
+      {/* @ts-expect-error */}
       <AccordionPrimitive.Header className="px-1">
         <div className="flex flex-col">
           <div className="flex w-full items-center justify-between">

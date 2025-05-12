@@ -5,8 +5,9 @@ import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-g
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import PaginatedProducts from "@modules/store/templates/paginated-products"
+import { getCustomer } from "@lib/data"
 
-export default function CollectionTemplate({
+export default async function CollectionTemplate({
   sortBy,
   collection,
   page,
@@ -18,6 +19,8 @@ export default function CollectionTemplate({
   countryCode: string
 }) {
   const pageNumber = page ? parseInt(page) : 1
+
+  const customer = await getCustomer().catch(() => null)
 
   return (
     <div className="flex flex-col small:flex-row small:items-start py-6 content-container">
@@ -32,6 +35,7 @@ export default function CollectionTemplate({
             page={pageNumber}
             collectionId={collection.id}
             countryCode={countryCode}
+            customer={customer}
           />
         </Suspense>
       </div>

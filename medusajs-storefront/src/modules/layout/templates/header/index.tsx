@@ -1,28 +1,28 @@
 import { Suspense } from "react"
-import Image from "next/image"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import { MagnifyingGlassIcon, UserIcon } from "@heroicons/react/24/solid"
 import { ShoppingCartIcon } from "@heroicons/react/24/outline"
 import HeaderDropdowns from "@modules/layout/templates/header/header-dropdowns"
+import {
+  listCategories,
+  listUnlockedPhones,
+  listBrands,
+  listDevices,
+} from "@lib/data"
 import { Customer } from "@medusajs/medusa"
 import CustomerApprovalBanner from "@modules/layout/templates/header/customer-approval-banner"
 
 interface HeaderProps {
   customer: Omit<Customer, "password_hash"> | null
-  categories: any[] // Replace with proper type
-  unlockedPhones: any[] // Replace with proper type
-  brands: any[] // Replace with proper type
-  devices: any[] // Replace with proper type
 }
 
-export default function Header({ 
-  customer, 
-  categories, 
-  unlockedPhones, 
-  brands, 
-  devices 
-}: HeaderProps) {
+export default async function Header({ customer }: HeaderProps) {
+  const categories = await listCategories()
+  const unlockedPhones = await listUnlockedPhones()
+  const brands = await listBrands()
+  const devices = await listDevices()
+
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base shadow-sm">
@@ -30,13 +30,11 @@ export default function Header({
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="h-full">
               <LocalizedClientLink href="/" className="h-full">
-                <Image
+                <img
                   src="/logo.png"
                   style={{ cursor: "pointer" }}
                   alt="Batteries N' Things Logo"
                   className="h-full object-contain"
-                  width={150}
-                  height={64}
                 />
               </LocalizedClientLink>
             </div>

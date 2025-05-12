@@ -1,10 +1,9 @@
-"use client";
-
 import { LineItem } from "@medusajs/medusa"
 
 import { enrichLineItems, retrieveCart } from "@modules/cart/actions"
 
 import CartDropdown from "../cart-dropdown"
+import { getCustomer } from "@lib/data"
 
 const fetchCart = async () => {
   const cart = await retrieveCart()
@@ -18,7 +17,10 @@ const fetchCart = async () => {
 }
 
 export default async function CartButton() {
-  const cart = await fetchCart()
+  const [cart, customer] = await Promise.all([
+    fetchCart(),
+    getCustomer().catch(() => null),
+  ])
 
-  return <CartDropdown cart={cart} />
+  return <CartDropdown cart={cart} customer={customer} />
 }
