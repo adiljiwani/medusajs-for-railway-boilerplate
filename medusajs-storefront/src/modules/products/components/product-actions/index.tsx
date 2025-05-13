@@ -1,21 +1,22 @@
 "use client"
 
 import { Customer, Region } from "@medusajs/medusa"
-import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
-import { Button } from "@medusajs/ui"
+import { PricedProduct, PricedVariant } from "@medusajs/medusa/dist/types/pricing"
+import { Button, Text } from "@medusajs/ui"
 import { isEqual } from "lodash"
 import { useParams } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
+import { useCart } from "medusa-react"
 
 import { useIntersection } from "@lib/hooks/use-in-view"
 import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/option-select"
 import QuantityInput from "@modules/products/components/quantity-input"
-
-import MobileActions from "../mobile-actions"
-import ProductPrice from "../product-price"
+import MobileActions from "@modules/products/components/mobile-actions"
+import ProductPrice from "@modules/products/components/product-price"
 import { handleAddToCart } from "@modules/cart/utils"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { addToCart } from "@modules/cart/actions"
 
 type ProductActionsProps = {
   product: PricedProduct
@@ -41,11 +42,10 @@ export default function ProductActions({
   disabled,
   customer,
 }: ProductActionsProps) {
+  const [quantity, setQuantity] = useState(1)
   const [options, setOptions] = useState<Record<string, string>>({})
   const [isAdding, setIsAdding] = useState(false)
-  const [quantity, setQuantity] = useState(1) // State for quantity input
-
-  const countryCode = useParams().countryCode as string
+  const { countryCode } = useParams()
 
   const variants = product.variants
 
@@ -131,12 +131,18 @@ export default function ProductActions({
 
   // add the selected variant to the cart
   const handleAddToCartClick = async () => {
-    if (!variant?.id) return null
-    await handleAddToCart({
-      variantId: variant.id,
-      quantity, // Pass the user-specified quantity
-      countryCode,
-      setIsAdding,
+    if (!variant) {
+      return
+    }
+
+    if (quantity > (variant.inventory_quantity || 0)) {
+      return
+    }
+
+    await addToCart({
+      variantId: variant.id as string,
+      quantity,
+      countryCode: countryCode as string,
     })
   }
 
@@ -145,57 +151,59 @@ export default function ProductActions({
   const isCustomerApproved = !!customer?.metadata?.approved
 
   return (
-    <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
+    <div className="flex flex-col gap-y-2" ref={actionsRef}>
+      <div className="flex flex-col gap-y-4">
         <div>
           {product.variants.length > 1 && (
             <div className="flex flex-col gap-y-4">
-              {(product.options || []).map((option) => (
-                <div key={option.id}>
-                  <OptionSelect
-                    option={option}
-                    current={options[option.id]}
-                    updateOption={updateOptions}
-                    title={option.title}
-                    data-testid="product-options"
-                    disabled={!!disabled || isAdding}
-                  />
-                </div>
-              ))}
+              {(product.options || []).map((option) => {
+                const optionId = option.id
+                return (
+                  <div key={optionId}>
+                    <OptionSelect
+                      option={option}
+                      current={String(options[optionId] ?? "")}
+                      updateOption={updateOptions}
+                      title={option.title}
+                      data-testid="product-options"
+                      disabled={!inStock || !!disabled || isAdding}
+                    />
+                  </div>
+                )
+              })}
               <Divider />
             </div>
           )}
         </div>
 
+        <div className="flex flex-col gap-y-2">
+          <div className="flex items-center justify-between">
+            <Text className="text-ui-fg-subtle">Price</Text>
+            <ProductPrice product={product} variant={variant} region={region} />
+          </div>
+
+          <QuantityInput
+            initialQuantity={quantity}
+            onUpdate={(newQuantity: number) => setQuantity(Math.min(newQuantity, variant?.inventory_quantity || 0))}
+          />
+        </div>
+
         {isCustomerSignedIn ? (
           isCustomerApproved ? (
-            <>
-              <ProductPrice
-                product={product}
-                variant={variant}
-                region={region}
-              />
-
-              <QuantityInput
-                initialQuantity={quantity}
-                onUpdate={(newQuantity) => setQuantity(newQuantity)}
-              />
-
-              <Button
-                onClick={handleAddToCartClick}
-                disabled={!inStock || !variant || !!disabled || isAdding}
-                variant="primary"
-                className="w-full h-10"
-                isLoading={isAdding}
-                data-testid="add-product-button"
-              >
-                {!variant
-                  ? "Select variant"
-                  : !inStock
-                  ? "Out of stock"
-                  : "Add to cart"}
-              </Button>
-            </>
+            <Button
+              onClick={handleAddToCartClick}
+              disabled={!inStock || !variant || !!disabled || isAdding}
+              variant="primary"
+              className="w-full h-10"
+              isLoading={isAdding}
+              data-testid="add-product-button"
+            >
+              {!variant
+                ? "Select variant"
+                : !inStock
+                ? "Out of stock"
+                : "Add to cart"}
+            </Button>
           ) : (
             <LocalizedClientLink href="/contact">
               <Button
@@ -224,13 +232,13 @@ export default function ProductActions({
           region={region}
           options={options}
           updateOptions={updateOptions}
-          inStock={inStock}
           handleAddToCart={handleAddToCartClick}
           isAdding={isAdding}
           show={!inView}
           optionsDisabled={!!disabled || isAdding}
+          inStock={inStock}
         />
       </div>
-    </>
+    </div>
   )
 }

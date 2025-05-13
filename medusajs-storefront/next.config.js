@@ -9,36 +9,101 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") })
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig = withStoreConfig({
-  features: {
-    search: store.features.search ? "true" : "false"
+const nextConfig = {
+  env: {
+    FEATURE_SEARCH_ENABLED: store.features.search ? "true" : "false",
   },
   reactStrictMode: true,
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "localhost",
-      },
-      {
         protocol: "https",
         hostname: "medusa-public-images.s3.eu-west-1.amazonaws.com",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "medusa-server-testing.s3.amazonaws.com",
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
+        pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "bngproducts.s3.us-east-2.amazonaws.com",
-      }
+        hostname: "medusa-server-testing.s3.us-east-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.us-west-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.us-west-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.ap-south-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.ap-northeast-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.ap-southeast-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.ap-southeast-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.ca-central-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.eu-central-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.eu-west-1.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.eu-west-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.eu-west-3.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.sa-east-1.amazonaws.com",
+        pathname: "/**",
+      },
     ],
   },
-})
+}
 
 console.log("next.config.js", JSON.stringify(module.exports, null, 2))
 
