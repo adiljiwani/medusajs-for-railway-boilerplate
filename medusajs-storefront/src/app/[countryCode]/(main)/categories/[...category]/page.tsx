@@ -1,9 +1,10 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { getCategoryByHandle, listCategories, listRegions } from "@lib/data"
+import { getCategoryByHandle, listCategories, listRegions, getCustomer } from "@lib/data"
 import CategoryTemplate from "@modules/categories/templates"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { ProductCategory } from "@medusajs/medusa"
 
 type Props = {
   params: { category: string[]; countryCode: string }
@@ -24,18 +25,26 @@ export async function generateStaticParams() {
     regions?.map((r) => r.countries.map((c) => c.iso_2)).flat()
   )
 
-  const categoryHandles = product_categories
-    .map((category: any) => category.handle)
-    .filter((handle: any) => typeof handle === 'string')
+  const categoryHandles = product_categories.map((category: ProductCategory) => category.handle)
 
   const staticParams = countryCodes
     ?.map((countryCode) =>
-      categoryHandles.map((handle: any) => ({
+      categoryHandles.map((handle: string) => ({
         countryCode,
         category: [handle],
       }))
     )
     .flat()
+    .filter(
+      (param) =>
+        param &&
+        typeof param.countryCode === "string" &&
+        param.countryCode.length > 0 &&
+        Array.isArray(param.category) &&
+        param.category.length > 0 &&
+        typeof param.category[0] === "string" &&
+        param.category[0].length > 0
+    )
 
   return staticParams
 }
@@ -43,11 +52,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const { product_categories } = await getCategoryByHandle(
-      params.category[0]
+      params.category
     ).then((product_categories) => product_categories)
 
     const title = product_categories
-      .map((category: any) => category.name)
+      .map((category) => category.name)
       .join(" | ")
 
     const description =
@@ -70,12 +79,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const { sortBy, page } = searchParams
 
   const { product_categories } = await getCategoryByHandle(
-    params.category[0]
+    params.category
   ).then((product_categories) => product_categories)
 
   if (!product_categories) {
     notFound()
   }
+
+  const customer = await getCustomer()
 
   return (
     <CategoryTemplate
@@ -83,6 +94,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       sortBy={sortBy}
       page={page}
       countryCode={params.countryCode}
+      customer={customer}
     />
   )
 }
