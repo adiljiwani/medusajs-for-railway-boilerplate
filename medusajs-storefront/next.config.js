@@ -10,7 +10,9 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") })
  * @type {import('next').NextConfig}
  */
 const nextConfig = withStoreConfig({
-  features: store.features,
+  features: {
+    search: store.features.search ? "true" : "false"
+  },
   reactStrictMode: true,
   images: {
     remotePatterns: [

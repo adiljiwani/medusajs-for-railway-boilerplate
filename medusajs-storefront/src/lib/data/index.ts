@@ -701,22 +701,22 @@ export const listDevices = async () => {
   return dropdowns["Shop by Device"] || []
 }
 
-export const getCategoryByHandle = cache(async function (handle: string) {
-  try {
-    const categories = await listCategories();
-    
-    const category = categories.find(
-      (category: any) => category.handle === handle || category.id === handle
-    );
-    
-    if (!category) {
-      console.error(`Category with handle ${handle} not found`);
-      return null;
-    }
-    
-    return category;
-  } catch (error) {
-    console.error("Error fetching category by handle:", error);
-    return null;
-  }
-});
+export const getCategoryByHandle = cache(async function (handle: string[]) {
+  const headers = getMedusaHeaders(["categories"])
+
+  return medusaClient.productCategories
+    .list(
+      {
+        handle: handle[handle.length - 1],
+        expand: "parent_category,parent_category.parent_category",
+      },
+      headers
+    )
+    .then(({ product_categories }) => {
+      return { product_categories }
+    })
+    .catch((err) => {
+      console.log(err)
+      return { product_categories: [] }
+    })
+})
