@@ -81,10 +81,11 @@ export default function BannerCarousel({ banners }: BannerCarouselProps) {
             <Image
               src={banner.imageUrl}
               alt={banner.altText || "Banner"}
-              layout="responsive"
               width={1920}
               height={600}
-              priority={index === currentIndex} // Load the current banner first
+              priority={index === currentIndex}
+              className="w-full h-auto"
+              style={{ objectFit: "cover" }}
             />
           </a>
         ))}

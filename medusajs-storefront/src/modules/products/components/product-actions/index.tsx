@@ -177,15 +177,19 @@ export default function ProductActions({
         </div>
 
         <div className="flex flex-col gap-y-2">
-          <div className="flex items-center justify-between">
-            <Text className="text-ui-fg-subtle">Price</Text>
-            <ProductPrice product={product} variant={variant} region={region} />
-          </div>
+          {isCustomerSignedIn && isCustomerApproved && (
+            <div className="flex items-center justify-between">
+              <Text className="text-ui-fg-subtle">Price</Text>
+              <ProductPrice product={product} variant={variant} region={region} />
+            </div>
+          )}
 
-          <QuantityInput
-            initialQuantity={quantity}
-            onUpdate={(newQuantity: number) => setQuantity(Math.min(newQuantity, variant?.inventory_quantity || 0))}
-          />
+          {isCustomerSignedIn && isCustomerApproved && (
+            <QuantityInput
+              initialQuantity={quantity}
+              onUpdate={(newQuantity: number) => setQuantity(Math.min(newQuantity, variant?.inventory_quantity || 0))}
+            />
+          )}
         </div>
 
         {isCustomerSignedIn ? (

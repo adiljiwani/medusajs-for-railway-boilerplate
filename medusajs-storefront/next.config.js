@@ -102,6 +102,22 @@ const nextConfig = {
         hostname: "medusa-server-testing.s3.sa-east-1.amazonaws.com",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "9000",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "bngproducts.s3.us-east-2.amazonaws.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.amazonaws.com",
+        pathname: "/**",
+      }
     ],
   },
   experimental: {
