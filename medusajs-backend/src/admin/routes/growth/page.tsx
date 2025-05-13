@@ -14,7 +14,13 @@ import type { RouteConfig } from "@medusajs/admin"
 import { ChartBar, ArrowUpRightMini } from "@medusajs/icons"
 import { Container, Heading, Select, DatePicker } from "@medusajs/ui"
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL
+
+if (!BACKEND_URL) {
+  throw new Error("NEXT_PUBLIC_MEDUSA_BACKEND_URL environment variable is not set")
+}
+
+console.log("Using backend URL:", BACKEND_URL)
 
 ChartJS.register(
   CategoryScale,
@@ -163,8 +169,11 @@ const GrowthPage = () => {
           break
       }
 
+      const url = `${BACKEND_URL}/admin/growth?start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}`
+      console.log("Making request to:", url)
+
       const response = await fetch(
-        `${BACKEND_URL}/admin/growth?start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}`,
+        url,
         {
           credentials: "include",
           headers: {
@@ -172,7 +181,9 @@ const GrowthPage = () => {
           },
         }
       )
+      console.log("Response status:", response.status)
       const data = await response.json()
+      console.log("Response data:", data)
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to fetch data")

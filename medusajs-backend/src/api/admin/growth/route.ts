@@ -3,6 +3,11 @@ import { dataSource } from "@medusajs/medusa/dist/loaders/database"
 import { authenticate } from "@medusajs/medusa"
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
+  // Add CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
   try {
     // Authenticate to get user email
     await authenticate()
