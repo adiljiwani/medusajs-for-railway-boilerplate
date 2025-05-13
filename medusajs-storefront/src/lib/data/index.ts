@@ -700,3 +700,23 @@ export const listDevices = async () => {
   const dropdowns = await readDropdownsFile()
   return dropdowns["Shop by Device"] || []
 }
+
+export const getCategoryByHandle = cache(async function (handle: string) {
+  try {
+    const categories = await listCategories();
+    
+    const category = categories.find(
+      (category: any) => category.handle === handle || category.id === handle
+    );
+    
+    if (!category) {
+      console.error(`Category with handle ${handle} not found`);
+      return null;
+    }
+    
+    return category;
+  } catch (error) {
+    console.error("Error fetching category by handle:", error);
+    return null;
+  }
+});

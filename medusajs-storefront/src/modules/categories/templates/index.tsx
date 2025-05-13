@@ -71,6 +71,7 @@ export default function CategoryTemplate({
             page={pageNumber}
             categoryId={category.id}
             countryCode={countryCode}
+            customer={null}
           />
         </Suspense>
       </div>

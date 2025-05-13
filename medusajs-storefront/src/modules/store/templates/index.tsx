@@ -29,6 +29,7 @@ const StoreTemplate = ({
             sortBy={sortBy || "created_at"}
             page={pageNumber}
             countryCode={countryCode}
+            customer={null}
           />
         </Suspense>
       </div>
