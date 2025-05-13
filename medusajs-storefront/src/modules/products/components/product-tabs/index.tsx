@@ -103,7 +103,7 @@ const ShippingInfoTab = () => {
           <div>
             <span className="font-semibold">Simple exchanges</span>
             <p className="max-w-sm">
-              Is the fit not quite right? No worries - we&#39;ll exchange your
+              Is the fit not quite right? No worries - we&apos;ll exchange your
               product for a new one.
             </p>
           </div>
@@ -113,8 +113,8 @@ const ShippingInfoTab = () => {
           <div>
             <span className="font-semibold">Easy returns</span>
             <p className="max-w-sm">
-              Just return your product and we&#39;ll refund your money. No
-              questions asked – we&#39;ll do our best to make sure your return
+              Just return your product and we&apos;ll refund your money. No
+              questions asked – we&apos;ll do our best to make sure your return
               is hassle-free.
             </p>
           </div>

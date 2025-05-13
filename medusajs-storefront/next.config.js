@@ -1,5 +1,10 @@
-const { withStoreConfig } = require('./store-config')
-const store = require('./store.config.json')
+const { withStoreConfig } = require("./store-config")
+const store = require("./store.config.json")
+const dotenv = require("dotenv")
+const path = require("path")
+
+// Load the environment variables from the root directory
+dotenv.config({ path: path.resolve(__dirname, "../.env") })
 
 /**
  * @type {import('next').NextConfig}
@@ -10,36 +15,20 @@ const nextConfig = withStoreConfig({
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'res.cloudinary.com',
+        protocol: "http",
+        hostname: "localhost",
       },
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
+        protocol: "https",
+        hostname: "medusa-public-images.s3.eu-west-1.amazonaws.com",
       },
       {
-        protocol: 'https',
-        hostname: 'medusa-server-testing.s3.amazonaws.com',
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.amazonaws.com",
       },
       {
-        protocol: 'https',
-        hostname: 'medusa-server-testing.s3.us-east-1.amazonaws.com',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-      },
-      {
-        protocol: 'https',
-        hostname: 'medusa-public-images.s3.eu-west-1.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'medusa-server-testing.s3.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'medusa-server-testing.s3.us-east-1.amazonaws.com',
+        protocol: "https",
+        hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
       },
       {
         protocol: "https",
@@ -47,15 +36,8 @@ const nextConfig = withStoreConfig({
       }
     ],
   },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
 })
 
-console.log('next.config.js', JSON.stringify(module.exports, null, 2))
+console.log("next.config.js", JSON.stringify(module.exports, null, 2))
 
 module.exports = nextConfig

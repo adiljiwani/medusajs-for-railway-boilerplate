@@ -29,7 +29,7 @@ const OrderOverview = ({ orders }: { orders: Order[] }) => {
     >
       <h2 className="text-large-semi">Nothing to see here</h2>
       <p className="text-base-regular">
-        You don&#39;t have any orders yet, let us change that {":)"}
+        You don&apos;t have any orders yet, let us change that {":)"}
       </p>
       <div className="mt-4">
         <LocalizedClientLink href="/" passHref>
