@@ -12,6 +12,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") })
 const nextConfig = {
   env: {
     FEATURE_SEARCH_ENABLED: store.features.search ? "true" : "false",
+    PORT: process.env.PORT || 8000,
   },
   reactStrictMode: true,
   images: {
@@ -103,6 +104,13 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: true,
+  },
+  // Ensure the app is accessible from any host
+  hostname: '0.0.0.0',
+  // Increase the timeout for the health check
+  serverTimeout: 30000,
 }
 
 console.log("next.config.js", JSON.stringify(module.exports, null, 2))
