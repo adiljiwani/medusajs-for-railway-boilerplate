@@ -82,11 +82,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     params.category
   ).then((product_categories) => product_categories)
 
-  if (!product_categories) {
-    notFound()
+  if (!product_categories || product_categories.length === 0) {
+    return notFound()
   }
 
   const customer = await getCustomer()
+
+  const category = product_categories[product_categories.length - 1]
+  const description = category.description ?? ""
 
   return (
     <CategoryTemplate
