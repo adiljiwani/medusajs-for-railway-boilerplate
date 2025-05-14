@@ -1,12 +1,18 @@
 import { Suspense } from "react"
 
-import { listRegions } from "@lib/data"
+import { listRegions, getCart, getCustomer } from "@lib/data"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
+import { cookies } from "next/headers"
 
 export default async function Nav() {
   const regions = await listRegions().then((regions) => regions)
+
+  // Get cartId from cookies
+  const cartId = cookies().get("_medusa_cart_id")?.value
+  const cart = cartId ? await getCart(cartId) : null
+  const customer = await getCustomer()
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
@@ -57,7 +63,7 @@ export default async function Nav() {
                 </LocalizedClientLink>
               }
             >
-              <CartButton />
+              <CartButton cart={cart} customer={customer} />
             </Suspense>
           </div>
         </nav>
