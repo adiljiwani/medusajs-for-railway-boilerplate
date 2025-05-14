@@ -15,7 +15,7 @@ import { ChartBar, ArrowUpRightMini } from "@medusajs/icons"
 import { Container, Heading, Select, DatePicker, Switch, StatusBadge, Button } from "@medusajs/ui"
 import { useAdminUpdateCustomer, useMedusa } from "medusa-react"
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+const BACKEND_URL = process.env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000"
 
 // Define the mapping between price lists and customer groups
 const PRICE_LIST_TO_GROUP_MAP = {

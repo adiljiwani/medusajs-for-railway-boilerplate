@@ -4,7 +4,7 @@ import { useAdminOrders } from "medusa-react"
 import { CreditCard } from "@medusajs/icons"
 import { useEffect, useState } from "react"
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+const BACKEND_URL = process.env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000"
 const ITEMS_PER_PAGE = 50
 
 type PaymentData = {

@@ -14,7 +14,9 @@ import type { RouteConfig } from "@medusajs/admin"
 import { ChartBar, ArrowUpRightMini } from "@medusajs/icons"
 import { Container, Heading, Select, DatePicker } from "@medusajs/ui"
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000"
+const BACKEND_URL = process.env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000"
+
+console.log("BACKEND_URL", BACKEND_URL)
 
 ChartJS.register(
   CategoryScale,
