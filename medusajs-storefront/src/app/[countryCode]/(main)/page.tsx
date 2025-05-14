@@ -21,17 +21,17 @@ export const metadata: Metadata = {
 
 const banners = [
   {
-    imageUrl: "/banner1.jpg",
+    imageUrl: "/banner-1.jpg",
     linkUrl: "/",
     altText: "Banner",
   },
   {
-    imageUrl: "/banner2.jpg",
+    imageUrl: "/banner-2.jpg",
     linkUrl: "/",
     altText: "Banner",
   },
   {
-    imageUrl: "/banner3.jpg",
+    imageUrl: "/banner-3.jpg",
     linkUrl: "/",
     altText: "Banner",
   },
