@@ -1,8 +1,8 @@
 import { Metadata } from "next"
-import { getCustomer } from "@lib/data"
+import { getCustomer, listCategories, listUnlockedPhones, listBrands, listDevices } from "@lib/data"
 import Footer from "@modules/layout/templates/footer"
 // import Nav from "@modules/layout/templates/nav"
-import Header from "@modules/layout/templates/header"
+import HeaderWrapper from "@modules/layout/templates/header/header-wrapper"
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://localhost:8000"
 
@@ -12,11 +12,15 @@ export const metadata: Metadata = {
 
 export default async function PageLayout(props: { children: React.ReactNode }) {
   const customer = await getCustomer().catch(() => null)
+  const categories = await listCategories()
+  const unlockedPhones = await listUnlockedPhones()
+  const brands = await listBrands()
+  const devices = await listDevices()
 
   return (
     <>
       {/* <Nav /> */}
-      <Header customer={customer} />
+      <HeaderWrapper />
       {props.children}
       <Footer />
     </>
