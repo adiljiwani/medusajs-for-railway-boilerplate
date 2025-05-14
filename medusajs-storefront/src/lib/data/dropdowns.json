@@ -828,66 +828,66 @@
       "name": "Fido", 
       "children": [],
       "include": {
-        "category_id": ["10"],
-        "subcategory_id": ["28", "29"]
+        "category_id": [],
+        "subcategory_id": []
       },
       "exclude": {
         "category_id": [],
         "subcategory_id": []
       },
-      "searchByTitle": false
+      "searchByTitle": true
     },
     { 
       "name": "Chatr", 
       "children": [],
       "include": {
-        "category_id": ["11"],
-        "subcategory_id": ["30", "31"]
+        "category_id": [],
+        "subcategory_id": []
       },
       "exclude": {
         "category_id": [],
         "subcategory_id": []
       },
-      "searchByTitle": false
+      "searchByTitle": true
     },
     { 
       "name": "Apple", 
       "children": [],
       "include": {
-        "category_id": ["9", "12"],
-        "subcategory_id": ["27", "32"]
+        "category_id": [],
+        "subcategory_id": []
       },
       "exclude": {
         "category_id": [],
         "subcategory_id": []
       },
-      "searchByTitle": false
+      "searchByTitle": true
     },
     { 
       "name": "Samsung", 
       "children": [],
       "include": {
-        "category_id": ["9", "13"],
-        "subcategory_id": ["27", "33"]
+        "category_id": [],
+        "subcategory_id": []
       },
       "exclude": {
         "category_id": [],
         "subcategory_id": []
       },
-      "searchByTitle": false
+      "searchByTitle": true
     },
     { 
       "name": "Kingston", 
       "children": [],
       "include": {
-        "category_id": ["14"],
-        "subcategory_id": ["34"]
+        "category_id": [],
+        "subcategory_id": []
       },
       "exclude": {
         "category_id": [],
         "subcategory_id": []
       },
-      "searchByTitle": false
+      "searchByTitle": true
     }
   ],
   "Shop by Device": [
