@@ -135,7 +135,7 @@ const Dropdown = ({
               </div>
             )}
             {hasChildren(option) && activeOptions.includes(option.name) && option.children && (
-              <div className="absolute left-full top-0 w-48 bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="lg:absolute lg:left-full lg:top-0 w-full lg:w-48 bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 {isStringArray(option.children) ? (
                   <div className="py-1">
                     {option.children.map((childName) => (

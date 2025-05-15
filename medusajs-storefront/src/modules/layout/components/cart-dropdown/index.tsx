@@ -234,7 +234,7 @@ const CartDropdown = ({ cart: cartState, customer }: CartDropdownProps) => {
                       </div>
                       <span>Your shopping bag is empty.</span>
                       <div>
-                        <LocalizedClientLink href="/store">
+                        <LocalizedClientLink href="/">
                           <>
                             <span className="sr-only">
                               Go to all products page

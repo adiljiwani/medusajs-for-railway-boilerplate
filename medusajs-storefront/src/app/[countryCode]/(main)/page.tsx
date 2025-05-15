@@ -1,6 +1,7 @@
 import { Customer, Product } from "@medusajs/medusa"
 import BannerCarousel from "@modules/home/components/banner-carousel"
 import { Metadata } from "next"
+import InteractiveLink from "@modules/common/components/interactive-link"
 
 import {
   getCollectionsList,
@@ -110,6 +111,13 @@ export default async function Home({
             customer={customer}
           />
         </ul>
+        <div className="content-container flex justify-center mt-8">
+          <div className="text-lg font-bold">
+            <InteractiveLink href="/store">
+              Explore all our products
+            </InteractiveLink>
+          </div>
+        </div>
       </div>
     </>
   )

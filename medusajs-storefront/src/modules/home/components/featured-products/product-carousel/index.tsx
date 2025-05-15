@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid"
 
 export default function ProductCarousel({
   containerId,
@@ -20,16 +21,18 @@ export default function ProductCarousel({
   return (
     <>
       <button
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-gray-200"
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white/80 hover:bg-white rounded-full shadow-md transition-all duration-200"
         onClick={scrollLeft}
+        aria-label="Scroll left"
       >
-        {"<"}
+        <ChevronLeftIcon className="w-4 h-4 text-gray-800" />
       </button>
       <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-gray-200"
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white/80 hover:bg-white rounded-full shadow-md transition-all duration-200"
         onClick={scrollRight}
+        aria-label="Scroll right"
       >
-        {">"}
+        <ChevronRightIcon className="w-4 h-4 text-gray-800" />
       </button>
     </>
   )
