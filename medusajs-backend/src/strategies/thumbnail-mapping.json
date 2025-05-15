@@ -1,0 +1,18 @@
+[
+  {
+    "filename": "batteries.png",
+    "category_id": "1",
+    "subcategory_id": null
+  },
+  {
+    "filename": "cables.png",
+    "category_id": "9",
+    "subcategory_id": "48"
+  },
+  {
+    "filename": "iphone.png",
+    "title_contains": "iphone",
+    "category_id": "9",
+    "subcategory_id": "27"
+  }
+] 
