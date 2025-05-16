@@ -195,32 +195,6 @@ class AddProductThumbnailsStrategy extends AbstractBatchJobStrategy {
             const affectedRows = result && result[1] && typeof result[1] === 'number' ? result[1] : 0;
             const logIdentifier = logIdentifierParts.join("; ");
             console.log(`Batch Job ${batchJobId}: (${processedCount + 1}/${totalMappings}) Updated: ${logIdentifier} to ${thumbnailUrl}. Rows: ${affectedRows}`);
-
-            // START VERIFICATION QUERY (Example for the 'batteries.png' case)
-            if (filename === "batteries.png" && category_ids && category_ids.includes("1")) { // Be specific to the case you want to check
-                try {
-                    const verificationQuery = `
-                        SELECT COUNT(*) as count
-                        FROM "product"
-                        WHERE category_id = $1 AND thumbnail = $2;
-                    `;
-                    const verificationParams = [category_ids.find(id => id === "1"), thumbnailUrl]; // Adapt params as needed
-                    const verificationResult = await this.manager_.query(verificationQuery, verificationParams);
-
-                    console.log("verificationResult", verificationResult);
-                    
-                    const count = verificationResult && verificationResult[0] && verificationResult[0].count;
-                    console.log(`Batch Job ${batchJobId}: VERIFICATION for ${filename} & category '1': Found ${count} products with the new thumbnail.`);
-                    if (parseInt(count, 10) !== affectedRows) {
-                        console.warn(`Batch Job ${batchJobId}: VERIFICATION MISMATCH for ${filename} & category '1'. Affected rows: ${affectedRows}, Verified count: ${count}`);
-                    }
-
-                } catch (verificationError) {
-                    console.error(`Batch Job ${batchJobId}: VERIFICATION ERROR for ${filename} & category '1': ${verificationError.message}`);
-                }
-            }
-            // END VERIFICATION QUERY
-
         } catch (error) {
             const criteriaForLog = JSON.stringify({ title_contains, category_ids, subcategory_ids });
             const errorMsg = `Error for mapping (file: ${filename}, criteria: ${criteriaForLog}): ${error.message}`;
