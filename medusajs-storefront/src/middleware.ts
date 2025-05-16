@@ -138,5 +138,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|favicon.ico|logo.png|banner-.*\\.jpg).*)"],
+  matcher: [
+    "/((?!api|_next/static|favicon.ico|logo.png|banner-.*\\.jpg|banner-.*\\.png).*)",
+  ],
 }
