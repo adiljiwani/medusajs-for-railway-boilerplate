@@ -114,7 +114,7 @@ export default async function Home({
         <div className="content-container flex justify-center mt-8">
           <div className="text-lg font-bold">
             <InteractiveLink href="/store">
-              Explore all our products
+              Explore all products
             </InteractiveLink>
           </div>
         </div>

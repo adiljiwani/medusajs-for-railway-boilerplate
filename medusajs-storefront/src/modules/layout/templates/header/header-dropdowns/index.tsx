@@ -16,10 +16,10 @@ const HeaderDropdowns = ({
 }) => {
   return (
     <div className="flex items-center gap-x-1 h-full">
-      <Dropdown title="Unlocked Phones" options={unlockedPhones} />
-      <Dropdown title="Shop by Category" options={categories} />
-      <Dropdown title="Shop by Brand" options={brands} />
-      <Dropdown title="Shop by Device" options={devices} />
+      {/* <Dropdown title="Unlocked Phones" options={unlockedPhones} /> */}
+      {/* <Dropdown title="Shop by Category" options={categories} /> */}
+      {/* <Dropdown title="Shop by Brand" options={brands} /> */}
+      {/* <Dropdown title="Shop by Device" options={devices} /> */}
     </div>
   )
 }

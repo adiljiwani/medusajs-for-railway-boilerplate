@@ -781,46 +781,6 @@
         "subcategory_id": []
       },
       "searchByTitle": false
-    },
-    { 
-      "name": "Watches and Clocks", 
-      "children": [
-        {
-          "name": "Watches",
-          "children": [],
-          "include": {
-            "category_id": [],
-            "subcategory_id": ["37"]
-          },
-          "exclude": {
-            "category_id": [],
-            "subcategory_id": []
-          },
-          "searchByTitle": false
-        },
-        {
-          "name": "Clocks",
-          "children": [],
-          "include": {
-            "category_id": [],
-            "subcategory_id": ["36"]
-          },
-          "exclude": {
-            "category_id": [],
-            "subcategory_id": []
-          },
-          "searchByTitle": false
-        }
-      ],
-      "include": {
-        "category_id": [],
-        "subcategory_id": []
-      },
-      "exclude": {
-        "category_id": [],
-        "subcategory_id": []
-      },
-      "searchByTitle": false
     }
   ],
   "Shop by Brand": [
