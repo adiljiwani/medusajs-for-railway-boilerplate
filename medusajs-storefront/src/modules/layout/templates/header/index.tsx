@@ -75,14 +75,6 @@ export default function Header({ customer, categories, unlockedPhones, brands, d
             {/* Search, Account, Cart - always visible */}
             <div className="flex items-center gap-x-6 h-full">
               <LocalizedClientLink
-                className="hover:text-ui-fg-base"
-                href="/search"
-                data-testid="nav-search-link"
-              >
-                <MagnifyingGlassIcon className="h-6 w-6 text-gray-500" />
-              </LocalizedClientLink>
-
-              <LocalizedClientLink
                 className="hover:text-ui-fg-base flex"
                 href="/account"
                 data-testid="nav-account-link"
