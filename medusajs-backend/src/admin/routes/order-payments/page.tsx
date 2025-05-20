@@ -263,8 +263,31 @@ const CustomPage = () => {
                         <Button
                           variant="secondary"
                           size="small"
-                          onClick={() => {
-                            alert(`Sending reminder for order #${order.display_id}...`)
+                          onClick={async () => {
+                            console.log(`[PaymentReminder] Sending reminder for order #${order.display_id}`);
+                            try {
+                              console.log(`[PaymentReminder] Making API call to ${BACKEND_URL}/store/orders/payment-reminder`);
+                              const response = await fetch(`${BACKEND_URL}/store/orders/payment-reminder`, {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({ order_id: order.id }),
+                              });
+
+                              console.log(`[PaymentReminder] API response status: ${response.status}`);
+                              if (response.ok) {
+                                console.log(`[PaymentReminder] Successfully sent reminder for order #${order.display_id}`);
+                                alert(`Payment reminder sent for order #${order.display_id}`);
+                              } else {
+                                const error = await response.json();
+                                console.error(`[PaymentReminder] Failed to send reminder: ${error.message}`);
+                                alert(`Failed to send reminder: ${error.message}`);
+                              }
+                            } catch (error) {
+                              console.error('[PaymentReminder] Error sending payment reminder:', error);
+                              alert('Error sending payment reminder');
+                            }
                           }}
                         >
                           Send Reminder
