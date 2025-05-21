@@ -12,7 +12,7 @@ export default async function PreviewQuantity({ quantity }: { quantity: ProductQ
       displayText = "< 100 in stock";
     } else {
       const roundedQuantity = Math.floor(quantity.available_quantity / 100) * 100;
-      displayText = `${roundedQuantity}+ in stock`;
+      displayText = `100+ in stock`;
     }
   
     return (

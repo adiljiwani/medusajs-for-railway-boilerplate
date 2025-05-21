@@ -12,7 +12,6 @@ import { useIntersection } from "@lib/hooks/use-in-view"
 import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/option-select"
 import QuantityInput from "@modules/products/components/quantity-input"
-import MobileActions from "@modules/products/components/mobile-actions"
 import ProductPrice from "@modules/products/components/product-price"
 import { handleAddToCart } from "@modules/cart/utils"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -230,18 +229,6 @@ export default function ProductActions({
             </Button>
           </LocalizedClientLink>
         )}
-        <MobileActions
-          product={product}
-          variant={variant}
-          region={region}
-          options={options}
-          updateOptions={updateOptions}
-          handleAddToCart={handleAddToCartClick}
-          isAdding={isAdding}
-          show={!inView}
-          optionsDisabled={!!disabled || isAdding}
-          inStock={inStock}
-        />
       </div>
     </div>
   )
